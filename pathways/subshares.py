@@ -23,12 +23,17 @@ logging.basicConfig(
 )
 
 
-def load_subshares() -> dict:
+def load_subshares(filepath) -> dict:
     """
     Load a YAML file and return its content as a Python dictionary.
+
+    :param filepath: Filepath to YAML file.
     :return: A dictionary with the categories, technologies and market shares data.
     """
-    with open(SUBSHARES) as stream:
+    if not filepath:
+        filepath = SUBSHARES
+
+    with open(filepath) as stream:
         data = yaml.safe_load(stream)
 
     if not isinstance(data, dict):
@@ -79,6 +84,15 @@ def check_uncertainty_params(data):
                             f"Missing mandatory uncertainty parameters for '{year}' in '{group}'"
                         )
     return data
+
+def get_central_value(params):
+    """
+    Get central value of a distribution.
+    """
+    if params["uncertainty_type"] == 4:
+        return (params["maximum"] - params["minimum"]) / 2
+    elif params["uncertainty_type"] in [0, 1, 2, 3, 5]:
+        return params["loc"]
 
 
 def check_subshares(data: dict) -> dict:
@@ -134,7 +148,7 @@ def check_subshares(data: dict) -> dict:
 
 
 def find_technology_indices(
-    regions: list, technosphere_indices: dict, geo: Geomap
+    regions: list, technosphere_indices: dict, geo: Geomap, filepath: str
 ) -> dict:
     """
     Fetch the indices in the technosphere matrix for the specified technologies and regions.
@@ -147,7 +161,7 @@ def find_technology_indices(
     :return: Dictionary keyed by technology categories, each containing a nested dictionary of regions
             to technology indices and year attributes.
     """
-    technologies_dict = load_subshares()
+    technologies_dict = load_subshares(filepath)
     indices_dict = {}
 
     for region in regions:
@@ -305,13 +319,16 @@ def load_and_normalize_shares(
     for technology_group, technologies in ranges.items():
         for technology, params in technologies.items():
             for y, share in params["share"].items():
-                uncertainty_base = UncertaintyBase.from_dicts(share)
-                random_generator = MCRandomNumberGenerator(
-                    params=uncertainty_base,
-                )
-                shares[technology_group][y][technology] = np.squeeze(
-                    np.array([random_generator.next() for _ in range(iterations)])
-                )
+                if iterations == 0:
+                    shares[technology_group][y][technology] = np.array([get_central_value(share)])
+                else:
+                    uncertainty_base = UncertaintyBase.from_dicts(share)
+                    random_generator = MCRandomNumberGenerator(
+                        params=uncertainty_base,
+                    )
+                    shares[technology_group][y][technology] = np.squeeze(
+                        np.array([random_generator.next() for _ in range(iterations)])
+                    )
 
     totals = defaultdict(lambda: np.array([]))
 
@@ -403,6 +420,7 @@ def interpolate_for_year(
 
 def generate_samples(
     years: list,
+    filepath: str = None,
     iterations: int = 10,
 ) -> dict:
     """
@@ -413,7 +431,7 @@ def generate_samples(
     :param iterations: Number of iterations for random generation.
     :return: A dict with adjusted and interpolated shares for each technology and year.
     """
-    ranges = load_subshares()
+    ranges = load_subshares(filepath)
     shares = load_and_normalize_shares(
         ranges,
         iterations,

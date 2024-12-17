@@ -313,6 +313,7 @@ class Pathways:
         demand_cutoff: float = 1e-3,
         use_distributions: int = 0,
         subshares: bool = False,
+        shares_filepath: Optional[str] = None,
         remove_uncertainty: bool = False,
         seed: int = 0,
         multiprocessing: bool = True,
@@ -345,6 +346,8 @@ class Pathways:
         :type use_distributions: int, default is 0
         :param subshares: Boolean. If True, calculate subshares.
         :type subshares: bool, default is False
+        :param shares_filepath: Filepath. Used for loading subshares. If None, default subshare file (pathways/data/technologies_shares.yaml) is used
+        :type shares_filepath: Optional[str], default is None
         :param remove_uncertainty: Boolean. If True, remove uncertainty from inventory exchanges.
         :type remove_uncertainty: bool, default is False
         :param seed: Integer. Seed for random number generator.
@@ -433,6 +436,7 @@ class Pathways:
         if subshares is True:
             shares = generate_samples(
                 years=self.scenarios.coords["year"].values.tolist(),
+                filepath=shares_filepath,
                 iterations=use_distributions,
             )
 
@@ -463,6 +467,7 @@ class Pathways:
                         self.debug,
                         use_distributions,
                         shares,
+                        shares_filepath,
                         uncertain_parameters,
                         remove_uncertainty,
                         seed,

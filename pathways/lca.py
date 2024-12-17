@@ -518,6 +518,7 @@ def _calculate_year(args: tuple):
         debug,
         use_distributions,
         shares,
+        shares_filepath,
         uncertain_parameters,
         remove_uncertainty,
         seed,
@@ -648,7 +649,7 @@ def _calculate_year(args: tuple):
             lca.lci()
 
         if shares:
-            shares_indices = find_technology_indices(regions, technosphere_indices, geo)
+            shares_indices = find_technology_indices(regions, technosphere_indices, geo, shares_filepath)
             correlated_arrays = adjust_matrix_based_on_shares(
                 lca=lca,
                 shares_dict=shares_indices,
