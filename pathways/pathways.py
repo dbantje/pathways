@@ -19,7 +19,7 @@ import yaml
 
 from .data_validation import validate_datapackage
 from .filesystem_constants import DATA_DIR, USER_LOGS_DIR
-from .lca import _calculate_year, get_lca_matrices
+from .lca import _calculate_year, get_lca_matrices, _calculate_contribution_year
 from .lcia import get_lcia_method_names
 from .stats import log_mc_parameters_to_excel
 from .subshares import generate_samples
@@ -137,10 +137,10 @@ class Pathways:
             _read_datapackage(datapackage)
         )
         self.mapping = _get_mapping(self.data)
-        try:
-            self.mapping.update(self._get_final_energy_mapping())
-        except KeyError:
-            pass
+        # try:
+        #     self.mapping.update(self._get_final_energy_mapping())
+        # except KeyError:
+        #     pass
         self.debug = debug
         self.scenarios = self._get_scenarios(dataframe)
         self.classifications = load_classifications()
@@ -174,7 +174,7 @@ class Pathways:
         for k, v in self.classifications.items():
             self.reverse_classifications[v].append(k)
 
-        clean_cache_directory()
+        # clean_cache_directory()
 
         if self.debug:
             logging.basicConfig(
@@ -314,7 +314,10 @@ class Pathways:
         use_distributions: int = 0,
         subshares: bool = False,
         shares_filepath: Optional[str] = None,
+        remove_shares_uncertainty: bool = False,
         remove_uncertainty: bool = False,
+        calculate_contributions: bool = False,
+        contribution_filepath: str = None,
         seed: int = 0,
         multiprocessing: bool = True,
         double_accounting: Optional[List[str]] = None,
@@ -348,8 +351,14 @@ class Pathways:
         :type subshares: bool, default is False
         :param shares_filepath: Filepath. Used for loading subshares. If None, default subshare file (pathways/data/technologies_shares.yaml) is used
         :type shares_filepath: Optional[str], default is None
+        :param remove_shares_uncertainty: Boolean. If True, remove uncertainty from subshares.
+        :type remove_shares_uncertainty: bool, default is False
         :param remove_uncertainty: Boolean. If True, remove uncertainty from inventory exchanges.
         :type remove_uncertainty: bool, default is False
+        :param calculate_contributions: Boolean. If True, calculate a contribution analysis.
+        :type calculate_contributions: bool, default is False
+        :param contribution_filepath: String. Where to save contribution analysis results. If None, use current working directory.
+        :type contribution_filepath: str, default is None
         :param seed: Integer. Seed for random number generator.
         :type seed: int, default is 0
         :param double_accounting: List. List of variables for which double accounting processing should be performed.
@@ -438,6 +447,7 @@ class Pathways:
                 years=self.scenarios.coords["year"].values.tolist(),
                 filepath=shares_filepath,
                 iterations=use_distributions,
+                remove_shares_uncertainty=remove_shares_uncertainty
             )
 
         # Iterate over each combination of model, scenario, and year
@@ -541,6 +551,236 @@ class Pathways:
                     shares,
                     methods,
                 )
+
+    def calculate_contributions(
+        self,
+        methods: Optional[List[str]] = None,
+        models: Optional[List[str]] = None,
+        scenarios: Optional[List[str]] = None,
+        regions: Optional[List[str]] = None,
+        years: Optional[List[int]] = None,
+        variables: Optional[List[str]] = None,
+        demand_cutoff: float = 1e-3,
+        use_distributions: int = 0,
+        subshares: bool = False,
+        shares_filepath: Optional[str] = None,
+        remove_shares_uncertainty: bool = False,
+        remove_uncertainty: bool = False,
+        contribution_filename: str = "./contributions.csv",
+        limit: int = 50,
+        limit_type: str = "number",
+        total_range: bool = False,
+        seed: int = 0,
+        multiprocessing: bool = True,
+        double_accounting: Optional[List[str]] = None,
+    ) -> None:
+        self.scenarios = harmonize_units(self.scenarios, variables)
+
+        # if no methods are provided, use all those available
+        methods = methods or get_lcia_method_names()
+        if self.debug:
+            logging.info(f"Using the following LCIA methods: {methods}")
+
+        if models is None:
+            models = self.scenarios.coords["model"].values
+            models = [m.lower() for m in models]
+            if self.debug:
+                logging.info(f"Using the following models: {models}")
+        if scenarios is None:
+            scenarios = self.scenarios.coords["pathway"].values
+            if self.debug:
+                logging.info(f"Using the following scenarios: {scenarios}")
+        if regions is None:
+            regions = self.scenarios.coords["region"].values
+            if self.debug:
+                logging.info(f"Using the following regions: {regions}")
+        if years is None:
+            years = self.scenarios.coords["year"].values
+            if self.debug:
+                logging.info(f"Using the following years: {years}")
+        if variables is None:
+            variables = self.scenarios.coords["variables"].values
+            variables = [str(v) for v in variables]
+            if self.debug:
+                logging.info(f"Using the following variables: {variables}")
+
+        # resize self.scenarios array to fit the given arguments
+        self.scenarios = resize_scenario_data(
+            self.scenarios, models, scenarios, regions, years, variables
+        )
+
+        # refresh self.mapping,
+        # remove keys that are not
+        # in self.scenarios.variable.values
+        self.mapping = {
+            k: self.mapping[k] for k in self.scenarios.coords["variables"].values
+        }
+
+        try:
+            _, technosphere_index, _, uncertain_parameters, _ = get_lca_matrices(
+                filepaths=self.filepaths,
+                model=models[0],
+                scenario=scenarios[0],
+                year=years[0],
+            )
+        except Exception as e:
+            logging.error(f"Error retrieving LCA matrices: {str(e)}")
+            return
+
+        # # Create xarray for storing LCA results if not already present
+        # if self.lca_results is None:
+        #     locations = fetch_inventories_locations(technosphere_index)
+
+        #     # if geography mapping is provided, aggregate locations
+        #     if self.geography_mapping:
+        #         locations = list(set(list(self.geography_mapping.values())))
+        #     else:
+        #         self.geography_mapping = {loc: loc for loc in locations}
+
+        #     self.lca_results = create_lca_results_array(
+        #         methods=methods,
+        #         years=years,
+        #         regions=regions,
+        #         locations=locations,
+        #         models=models,
+        #         scenarios=scenarios,
+        #         classifications=self.classifications,
+        #         mapping=self.mapping,
+        #         use_distributions=use_distributions > 0,
+        #     )
+
+        # generate share of sub-technologies
+        shares = None
+        if subshares is True:
+            shares = generate_samples(
+                years=self.scenarios.coords["year"].values.tolist(),
+                filepath=shares_filepath,
+                iterations=use_distributions,
+                remove_shares_uncertainty=remove_shares_uncertainty
+            )
+
+        # Iterate over each combination of model, scenario, and year
+        results = {}
+        for model in models:
+            print(f"Calculating Contribution results for {model}...")
+            for scenario in scenarios:
+                print(f"--- Calculating Contribution results for {scenario}...")
+
+                args = [
+                    (
+                        model,
+                        scenario,
+                        year,
+                        regions,
+                        variables,
+                        methods,
+                        demand_cutoff,
+                        self.filepaths,
+                        self.mapping,
+                        self.units,
+                        self.lca_results,
+                        self.classifications,
+                        self.scenarios,
+                        self.reverse_classifications,
+                        self.geography_mapping,
+                        self.debug,
+                        use_distributions,
+                        shares,
+                        shares_filepath,
+                        limit,
+                        limit_type,
+                        total_range,
+                        uncertain_parameters,
+                        remove_uncertainty,
+                        seed,
+                        double_accounting,
+                    )
+                    for year in years
+                ]
+
+                if multiprocessing:
+                    # Process each region in parallel
+                    with Pool(cpu_count(), maxtasksperchild=1000) as p:
+                        # store the results as a dictionary with years as keys
+                        results.update(
+                            {
+                                (model, scenario, year): result
+                                for year, result in zip(
+                                    years, p.map(_calculate_contribution_year, args)
+                                )
+                            }
+                        )
+                else:
+                    for arg in args:
+                        results[(arg[0], arg[1], arg[2])] = _calculate_contribution_year(arg)
+
+        # remove None values in results
+        results = {k: v for k, v in results.items() if v is not None}
+
+        # combine results into one dataframe
+        dflist = []
+        for k, v in results.items():
+            for region, val in v.items():
+                df = val.copy().reset_index(names="dataset name")
+                df["region"] = region
+                df["model"] = k[0]
+                df["scenario"] = k[1]
+                df["year"] = k[2]
+                dflist.append(df)
+
+        pd.concat(dflist, axis=0)[
+            ["model", "scenario", "year", "region",  "dataset name"] + methods
+            ].to_csv(contribution_filename)
+
+        # save dataframe
+
+        # if multiprocessing:
+        #     with Pool(cpu_count(), maxtasksperchild=1000) as p:
+        #         args = [
+        #             (
+        #                 coords,
+        #                 result,
+        #                 use_distributions,
+        #                 shares,
+        #                 methods,
+        #             )
+        #             for coords, result in results.items()
+        #         ]
+
+        #         r = p.starmap(_fill_in_result_array, args)
+
+        #         for c, coord in enumerate([c[0] for c in args]):
+        #             model, scenario, year = coord
+        #             self.lca_results.loc[
+        #                 dict(
+        #                     model=model,
+        #                     scenario=scenario,
+        #                     year=year,
+        #                 )
+        #             ] = r[c]
+
+        # else:
+        #     for coords, values in results.items():
+        #         model, scenario, year = coords
+
+        #         logging.info(
+        #             f"Variables in lca_results: {self.lca_results.coords['variable'].values}"
+        #         )
+
+        #         self.lca_results.loc[
+        #             dict(
+        #                 model=model,
+        #                 scenario=scenario,
+        #                 year=year,
+        #             )
+        #         ] = _fill_in_result_array(
+        #             coords,
+        #             values,
+        #             use_distributions,
+        #             shares,
+        #             methods,
+        #         )
+        
 
     def display_results(self, cutoff: float = 0.001) -> xr.DataArray:
         return display_results(self.lca_results, cutoff=cutoff)

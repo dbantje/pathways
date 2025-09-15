@@ -93,6 +93,19 @@ def get_central_value(params):
         return (params["maximum"] - params["minimum"]) / 2
     elif params["uncertainty_type"] in [0, 1, 2, 3, 5]:
         return params["loc"]
+    
+def centralize_shares(ranges):
+    """
+    Set all shares to central values.
+    """
+    for group, technologies in ranges.items():
+        for technology, params in technologies.items():
+            if "share" in params:
+                for year, share in params["share"].items():
+                    centralized_share = {"loc": get_central_value(share)}
+                    ranges[group][technology]["share"][year] = centralized_share
+    
+    return check_subshares(check_uncertainty_params(ranges))
 
 
 def check_subshares(data: dict) -> dict:
@@ -422,6 +435,7 @@ def generate_samples(
     years: list,
     filepath: str = None,
     iterations: int = 10,
+    remove_shares_uncertainty: bool = False
 ) -> dict:
     """
     Generates and adjusts randomly selected shares for parameters to sum to 1
@@ -432,9 +446,11 @@ def generate_samples(
     :return: A dict with adjusted and interpolated shares for each technology and year.
     """
     ranges = load_subshares(filepath)
+    if remove_shares_uncertainty:
+        ranges = centralize_shares(ranges)
     shares = load_and_normalize_shares(
         ranges,
-        iterations,
+        iterations
     )
     interpolate_shares(shares, years)
     return shares

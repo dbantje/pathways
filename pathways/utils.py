@@ -22,6 +22,7 @@ import xarray as xr
 import yaml
 from datapackage import DataPackage, DataPackageException
 from premise.geomap import Geomap
+from bw2analyzer import ContributionAnalysis
 
 from .filesystem_constants import DATA_DIR, DIR_CACHED_DB, USER_LOGS_DIR
 
@@ -843,3 +844,81 @@ def _read_datapackage(datapackage: str) -> DataPackage:
     """
 
     return DataPackage(datapackage)
+
+def combine_functional_units(
+        fus: Dict
+) -> Dict:
+    idx_list = []
+    amount_list = []
+    for demand in fus.values():
+        idx_list += list(demand.keys())
+        amount_list += list(demand.values())
+
+    combined_fu_df = pd.DataFrame(
+        {
+            "idx": idx_list,
+            "All FUs": amount_list
+        }
+    ).groupby("idx").sum()
+    combined_fu = combined_fu_df[combined_fu_df["All FUs"] != 0].to_dict()
+
+    return combined_fu
+
+def build_contribution_dict(
+    contributions: np.ndarray,
+    FU_M_index: dict,
+    rev_dict: dict,
+    limit: int,
+    limit_type: str,
+    total_range: bool,
+) -> dict:
+    """Sort the given contribution array on method or reference flow column.
+
+    Parameters
+    ----------
+    contributions: A 2-dimensional contribution array
+    FU_M_index : Dictionary which maps the reference flows or methods to their matching columns
+    rev_dict : 'reverse' dictionary used to map correct activity/method to its value
+    limit : Number of top-contributing items to include
+    limit_type : Either "number" or "percent", ContributionAnalysis.sort_array for complete explanation
+
+    Returns
+    -------
+    Top-contributing flows per method or activity
+
+    """
+    topcontribution_dict = dict()
+    for fu_or_method, col in FU_M_index.items():
+        contribution_col = contributions[col, :]
+        if total_range:  # total is based on the range
+            normalize_to = np.abs(contribution_col).sum()
+        else:  # total is based on the score
+            normalize_to = contribution_col.sum()
+        score = contribution_col.sum()
+
+        top_contribution = ContributionAnalysis().sort_array(
+            contribution_col, limit=limit, limit_type=limit_type, total=normalize_to
+        )
+
+        # split and calculate remaining rest sections for positive and negative part
+        pos_rest = (
+            np.sum(contribution_col[contribution_col > 0])
+            - np.sum(top_contribution[top_contribution[:, 0] > 0][:, 0])
+        )
+        neg_rest = (
+                np.sum(contribution_col[contribution_col < 0])
+                - np.sum(top_contribution[top_contribution[:, 0] < 0][:, 0])
+        )
+
+        cont_per = OrderedDict()
+        cont_per.update(
+            {
+                "Score": score,
+                "Rest (+)": pos_rest,
+                "Rest (-)": neg_rest,
+            }
+        )
+        for value, index in top_contribution:
+            cont_per.update({rev_dict[index]: value})
+        topcontribution_dict.update({fu_or_method: cont_per})
+    return topcontribution_dict

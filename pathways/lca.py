@@ -17,6 +17,7 @@ import sparse as sp
 from bw_processing import Datapackage
 from premise.geomap import Geomap
 from scipy import sparse
+import pandas as pd
 
 from .filesystem_constants import DIR_CACHED_DB, USER_LOGS_DIR
 from .lcia import fill_characterization_factors_matrices
@@ -35,6 +36,8 @@ from .utils import (
     apply_filters,
     get_combined_filters,
     read_categories_from_yaml,
+    combine_functional_units,
+    build_contribution_dict
 )
 
 logging.basicConfig(
@@ -88,6 +91,31 @@ def load_matrix_and_index(
 
     return data_array, indices_array, flip_array, distributions_array
 
+def combine_vector_arrays(data, indices, sign, correlated_arrays):
+    """
+    """
+    a_data_samples, a_indices, a_sign = correlated_arrays
+    a_data_samples = np.squeeze(a_data_samples)
+    a_indices = np.squeeze(a_indices)
+    a_sign = np.squeeze(a_sign)
+
+    df = pd.DataFrame(
+        {
+            "data": data,
+            "sign": sign
+        },
+        index=indices 
+    )
+    df_a = pd.DataFrame(
+        {
+            "data": a_data_samples,
+            "sign": a_sign
+        },
+        index=a_indices 
+    )
+    combined = df_a.combine_first(df)
+
+    return np.array(combined["data"]), np.array(combined.index), np.array(combined["sign"])
 
 def get_lca_matrices(
     filepaths: list,
@@ -188,6 +216,119 @@ def get_lca_matrices(
 
     return dp, technosphere_inds, biosphere_inds, uncertain_parameters, vars_info
 
+def get_adjusted_lca_matrices(
+    filepaths: list,
+    model: str,
+    scenario: str,
+    year: int,
+    correlated_arrays: list,
+    mapping: Dict = None,
+    regions: List[str] = None,
+    variables: List[str] = None,
+    geo: Geomap = None,
+    remove_uncertainty: bool = False,
+) -> tuple[
+    Datapackage,
+    dict[tuple[str, str, str, str], int],
+    dict[tuple, int],
+    list[tuple[int, int]],
+    [dict, None],
+]:
+    """
+    Retrieve Life Cycle Assessment (LCA) matrices from disk.
+
+    :param filepaths: A list of filepaths containing the LCA matrices.
+    :type filepaths: List[str]
+    :param model: The name of the model.
+    :type model: str
+    :param scenario: The name of the scenario.
+    :type scenario: str
+    :param year: The year of the scenario.
+    :type year: int
+    :rtype: Tuple[sparse.csr_matrix, sparse.csr_matrix, Dict, Dict, List]
+    """
+
+    # find the correct filepaths in filepaths
+    # the correct filepath are the strings that contains
+    # the model, scenario and year
+    def filter_filepaths(suffix: str, contains: List[str]):
+        return [
+            Path(fp)
+            for fp in filepaths
+            if all(kw in fp for kw in contains)
+            and Path(fp).suffix == suffix
+            and Path(fp).exists()
+        ]
+
+    def select_filepath(keyword: str, fps):
+        matches = [fp for fp in fps if keyword in fp.name]
+        if not matches:
+            raise FileNotFoundError(f"Expected file containing '{keyword}' not found.")
+        return matches[0]
+
+    fps = filter_filepaths(".csv", [model, scenario, str(year)])
+    if len(fps) != 4:
+        raise ValueError(f"Expected 4 filepaths, got {len(fps)}")
+
+    fp_technosphere_inds = select_filepath("A_matrix_index", fps)
+    fp_biosphere_inds = select_filepath("B_matrix_index", fps)
+    technosphere_inds = read_indices_csv(fp_technosphere_inds)
+    biosphere_inds = read_indices_csv(fp_biosphere_inds)
+    # remove the last element of the tuple, which is the index
+    biosphere_inds = {k[:-1]: v for k, v in biosphere_inds.items()}
+
+    # Fetch indices
+    if geo is not None:
+        vars_info = fetch_indices(mapping, regions, variables, technosphere_inds, geo)
+    else:
+        vars_info = None
+
+    dp = bwp.create_datapackage()
+
+    fp_A = select_filepath("A_matrix", [fp for fp in fps if "index" not in fp.name])
+    fp_B = select_filepath("B_matrix", [fp for fp in fps if "index" not in fp.name])
+
+    # Load matrices and add them to the datapackage
+    uncertain_parameters = None
+    for matrix_name, fp in [("technosphere_matrix", fp_A), ("biosphere_matrix", fp_B)]:
+        data, indices, sign, distributions = load_matrix_and_index(fp)
+
+        # remove uncertainty data
+        if remove_uncertainty is True:
+            distributions = np.array(
+                [
+                    (0, None, None, None, None, None, False)
+                    for _ in range(len(distributions))
+                ],
+                dtype=bwp.UNCERTAINTY_DTYPE,
+            )
+
+        if matrix_name == "technosphere_matrix":
+            uncertain_parameters = find_uncertain_parameters(distributions, indices)
+
+        # print(f"Shape of dataarray: {correlated_arrays[0].shape}")
+        # print(f"Shape of indicesarray: {correlated_arrays[1].shape}")
+        # print(f"Shape of fliparray: {correlated_arrays[2].shape}")
+
+            data, indices, sign = combine_vector_arrays(data, indices, sign, correlated_arrays)
+            print(indices)
+
+            dp.add_persistent_vector(
+                matrix=matrix_name,
+                indices_array=indices,
+                data_array=data,
+                flip_array=sign,
+            )
+        else:
+            dp.add_persistent_vector(
+                matrix=matrix_name,
+                indices_array=indices,
+                data_array=data,
+            )
+
+    return dp, technosphere_inds, biosphere_inds, uncertain_parameters, vars_info
+
+
 
 def find_uncertain_parameters(
     distributions_array: np.ndarray, indices_array: np.ndarray
@@ -265,7 +406,13 @@ def create_functional_units(
         # Compute the unit conversion vector for the given activities
         dataset_unit = dataset[2]
 
-        # check if we need units conversion
+        # # check if we need units conversion
+        # print(variable)
+        # print(
+        #     "Scenario unit: {} | Dataset unit: {}".format(
+        #         scenarios.attrs["units"][variable], dataset_unit
+        #     )
+        # )
         unit_vector = get_unit_conversion_factors(
             scenarios.attrs["units"][variable],
             dataset_unit,
@@ -493,6 +640,201 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
 
     return d
 
+def process_region_contribution(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
+    """
+    Process the region data.
+    :param data: Tuple containing the model, scenario, year, region, variables, vars_idx, scenarios, units_map,
+                    demand_cutoff, lca, characterization_matrix, debug, use_distributions, uncertain_parameters.
+    :return: Dictionary containing the region data.
+    """
+    (
+        model,
+        scenario,
+        year,
+        region,
+        variables,
+        fus_details,
+        scenarios,
+        units_map,
+        demand_cutoff,
+        lca,
+        characterization_matrix,
+        methods,
+        debug,
+        use_distributions,
+        uncertain_parameters,
+        limit,
+        limit_type,
+        total_range
+    ) = data
+
+    # id_uncertainty_indices_filepath = None
+    # id_technosphere_indices_filepath = None
+    # iter_results_files = []
+    # iter_param_vals_filepath = None
+
+    # dict_loc_cat = {}
+
+    # cat_counter = 0
+    # for cat, act_cat_idx in lca.acts_category_idx_dict.items():
+    #     loc_counter = 0
+    #     for loc, act_loc_idx in lca.acts_location_idx_dict.items():
+    #         # Find the intersection of indices
+    #         idx = np.intersect1d(act_cat_idx, act_loc_idx)
+    #         # Filter out any -1 indices
+    #         filtered_idx = idx[idx != -1]
+
+    #         if filtered_idx.size > 0:
+    #             # Assign the filtered index array
+    #             # to the dict_loc_cat with (cat, loc) as key
+    #             dict_loc_cat[(cat_counter, loc_counter)] = filtered_idx
+
+    #         loc_counter += 1
+    #     cat_counter += 1
+
+    if use_distributions == 0:
+        # Regular LCA calculations
+        with CustomFilter("(almost) singular matrix"):
+            lca.lci()
+
+        if debug:
+            logging.info(f"Iterations no.: {use_distributions}.")
+
+        # Create a numpy array with the results
+        inventory_results = np.array(
+            [
+                (characterization_matrix @ value).toarray()
+                for value in lca.inventories.values()
+            ]
+        )
+
+        if debug:
+            logging.info(f"Shape of inventory_results: {inventory_results.shape}")
+
+        if debug:
+            for fu, inventory in lca.inventories.items():
+                logging.info(
+                    f"Functional unit: {fu}. Impact: {(characterization_matrix @ inventory).sum()}"
+                )
+
+        df = pd.DataFrame(
+                inventory_results[0].T,
+                columns = methods
+        )
+        idx2name = {v: k[0] for k, v in lca.technosphere_indices.items()}
+        df["dataset name"] = df.index.to_series().map(idx2name)
+        df_grouped = df.groupby("dataset name").sum()
+
+        FU_M_index = {m: i for i, m in enumerate(df_grouped.columns)}
+        rev_dict = {i: name for i, name in enumerate(df_grouped.index)}
+
+        table_data = pd.DataFrame(
+            build_contribution_dict(
+                df_grouped.T.to_numpy(),
+                FU_M_index,
+                rev_dict,
+                limit,
+                limit_type,
+                total_range
+            )
+        )
+        table_data = table_data.div(table_data.loc['Score'])
+        print(table_data)
+
+        return table_data
+    
+    # Not implemented yet!
+    # else: 
+        # # Use distributions for LCA calculations
+        # iter_param_vals = []
+        # with CustomFilter("(almost) singular matrix"):
+        #     for iteration in range(use_distributions):
+        #         next(lca)
+        #         lca.lci()
+
+        #         # Create a numpy array with the results
+        #         inventory_results = np.array(
+        #             [
+        #                 (characterization_matrix @ value).toarray()
+        #                 for value in lca.inventories.values()
+        #             ]
+        #         )
+        #         iter_param_vals.append(
+        #             [
+        #                 -lca.technosphere_matrix[index]
+        #                 for index in lca.uncertain_parameters
+        #             ]
+        #         )
+
+        #         iter_results = np.zeros(
+        #             (
+        #                 inventory_results.shape[0],
+        #                 inventory_results.shape[1],
+        #                 len(lca.acts_category_idx_dict),
+        #                 len(lca.acts_location_idx_dict),
+        #             )
+        #         )
+
+        #         for (cat, loc), idx in dict_loc_cat.items():
+        #             iter_results[:, :, cat, loc] = inventory_results[:, :, idx].sum(
+        #                 axis=2
+        #             )
+
+        #         # Save iteration results to disk
+        #         iter_results_filepath = (
+        #             DIR_CACHED_DB / f"iter_results_{uuid.uuid4()}.npz"
+        #         )
+        #         sp.save_npz(
+        #             filename=iter_results_filepath,
+        #             matrix=sp.COO(iter_results),
+        #             compressed=True,
+        #         )
+        #         iter_results_files.append(iter_results_filepath)
+
+    #     # Save iteration parameter values to disk
+    #     iter_param_vals_filepath = DIR_CACHED_DB / f"iter_param_vals_{uuid.uuid4()}.npy"
+    #     np.save(file=iter_param_vals_filepath, arr=np.stack(iter_param_vals, axis=-1))
+
+    #     # Save the uncertainty indices to disk
+    #     id_uncertainty_indices_filepath = (
+    #         DIR_CACHED_DB / f"mc_indices_{uuid.uuid4()}.npy"
+    #     )
+    #     np.save(
+    #         file=id_uncertainty_indices_filepath,
+    #         arr=lca.uncertain_parameters,
+    #     )
+
+    #     # Save the technosphere indices to disk
+    #     id_technosphere_indices_filepath = (
+    #         DIR_CACHED_DB / f"tech_indices_{uuid.uuid4()}.pkl"
+    #     )
+    #     pickle.dump(
+    #         lca.technosphere_indices,
+    #         open(id_technosphere_indices_filepath, "wb"),
+    #     )
+
+    # # Returning a dictionary containing the id_array and the variables
+    # # to be able to fetch them back later
+    # d = {
+    #     "iterations_results": iter_results_files,
+    #     "variables": {k: v["demand"] for k, v in fus_details.items()},
+    # }
+
+    # if debug:
+    #     logging.info(f"d: {d}")
+    #     logging.info(f"FUs: {list(lca.inventories.keys())}")
+
+    # if use_distributions > 0:
+    #     d["uncertainty_params"] = [
+    #         str(id_uncertainty_indices_filepath),
+    #     ]
+    #     d["technosphere_indices"] = [
+    #         str(id_technosphere_indices_filepath),
+    #     ]
+    #     d["iterations_param_vals"] = [
+    #         str(iter_param_vals_filepath),
+    #     ]
+
 
 def _calculate_year(args: tuple):
     """
@@ -656,15 +998,43 @@ def _calculate_year(args: tuple):
                 subshares=shares,
                 year=year,
             )
-            bw_correlated = get_subshares_matrix(correlated_arrays)
+            if use_distributions > 0:
+                bw_correlated = get_subshares_matrix(correlated_arrays)
 
-            lca = bc.MultiLCA(
-                demands=fus,
-                method_config={"impact_categories": []},
-                data_objs=[bw_datapackage, bw_correlated],
-                use_distributions=True if use_distributions > 0 else False,
-                use_arrays=True,
-            )
+                lca = bc.MultiLCA(
+                    demands=fus,
+                    method_config={"impact_categories": []},
+                    data_objs=[bw_datapackage, bw_correlated],
+                    use_distributions=True,
+                    use_arrays=True,
+                )
+            else:
+                (
+                    bw_adjusted,
+                    technosphere_indices,
+                    biosphere_indices,
+                    uncertain_parameters,
+                    vars_info,
+                ) = get_adjusted_lca_matrices(
+                    filepaths=filepaths,
+                    model=model,
+                    scenario=scenario,
+                    year=year,
+                    correlated_arrays=correlated_arrays,
+                    mapping=mapping,
+                    regions=regions,
+                    variables=variables,
+                    geo=geo,
+                    remove_uncertainty=remove_uncertainty,
+                )
+
+                lca = bc.MultiLCA(
+                    demands=fus,
+                    method_config={"impact_categories": []},
+                    data_objs=[bw_adjusted,],
+                    use_distributions=False,
+                    use_arrays=False
+                )        
 
             with CustomFilter("(almost) singular matrix"):
                 lca.lci()
@@ -712,6 +1082,265 @@ def _calculate_year(args: tuple):
                 debug,
                 use_distributions,
                 uncertain_parameters,
+            )
+        )
+
+    return results
+
+def _calculate_contribution_year(args: tuple):
+    """
+    Prepares the data for the calculation of LCA results for a given year
+    and calls the process_region function to calculate the results for each region.
+    """
+    (
+        model,
+        scenario,
+        year,
+        regions,
+        variables,
+        methods,
+        demand_cutoff,
+        filepaths,
+        mapping,
+        units,
+        lca_results,
+        classifications,
+        scenarios,
+        reverse_classifications,
+        geography_mapping,
+        debug,
+        use_distributions,
+        shares,
+        shares_filepath,
+        limit,
+        limit_type,
+        total_range,
+        uncertain_parameters,
+        remove_uncertainty,
+        seed,
+        double_accounting,
+    ) = args
+
+    print(f"------ Calculating Contribution results for {year}...")
+    if debug:
+        logging.info(
+            f"############################### "
+            f"{model}, {scenario}, {year} "
+            f"###############################"
+        )
+
+    try:
+        geo = Geomap(model=model)
+    except FileNotFoundError:
+        from constructive_geometries import Geomatcher
+
+        geo = Geomatcher()
+        geo.model = model
+        geo.geo = geo
+
+    # Try to load LCA matrices for
+    # the given model, scenario, and year
+
+    try:
+        (
+            bw_datapackage,
+            technosphere_indices,
+            biosphere_indices,
+            uncertain_parameters,
+            vars_info,
+        ) = get_lca_matrices(
+            filepaths=filepaths,
+            model=model,
+            scenario=scenario,
+            year=year,
+            mapping=mapping,
+            regions=regions,
+            variables=variables,
+            geo=geo,
+            remove_uncertainty=remove_uncertainty,
+        )
+
+    except FileNotFoundError:
+        # If LCA matrices can't be loaded, skip to the next iteration
+        if debug:
+            logging.warning(
+                f"Skipping {model}, {scenario}, {year}, " f"as data not found."
+            )
+        return
+
+    # check unclassified activities
+    missing_classifications = check_unclassified_activities(
+        technosphere_indices, classifications
+    )
+
+    if missing_classifications:
+        if debug:
+            logging.warning(
+                f"{len(missing_classifications)} activities are not found "
+                f"in the classifications."
+                "See missing_classifications.csv for more details."
+            )
+
+    results = {}
+
+    # acts_category_idx_dict = _group_technosphere_indices(
+    #     technosphere_indices=technosphere_indices,
+    #     group_by=lambda x: classifications.get(x[:3], "unclassified"),
+    #     group_values=lca_results.coords["act_category"].values.tolist(),
+    # )
+
+    # # reorder keys of acts_category_idx_dict based on lca_results.coords["act_category"].values
+    # acts_category_idx_dict = {
+    #     k: acts_category_idx_dict[k]
+    #     for k in lca_results.coords["act_category"].values.tolist()
+    # }
+
+    # acts_location_idx_dict = _group_technosphere_indices(
+    #     technosphere_indices=technosphere_indices,
+    #     group_by=lambda x: x[-1],
+    #     group_values=list(set([x[-1] for x in technosphere_indices.keys()])),
+    #     mapping=geography_mapping,
+    # )
+
+    # # reorder keys of acts_location_idx_dict based on lca_results.coords["location"].values
+    # acts_location_idx_dict = {
+    #     k: acts_location_idx_dict[k]
+    #     for k in lca_results.coords["location"].values.tolist()
+    # }
+
+    bar = pyprind.ProgBar(len(regions))
+    for region in regions:
+        fus, fus_details = create_functional_units(
+            scenarios=scenarios,
+            region=regions[0],
+            model=model,
+            scenario=scenario,
+            year=year,
+            variables=variables,
+            vars_idx=vars_info[region],
+            units_map=units,
+        )
+
+        combined_fu = combine_functional_units(fus)
+
+        if debug:
+            logging.info(
+                f"Functional units created. " f"Total number of activities: {len(fus)}"
+            )
+            for fu in fus:
+                logging.info(
+                    f"Functional unit: {fu}, demand: {fus[fu]}. Details: {fus_details[fu]}"
+                )
+            logging.info(f"variables: {variables}")
+
+        lca = bc.MultiLCA(
+            demands=combined_fu,
+            method_config={"impact_categories": []},
+            data_objs=[
+                bw_datapackage,
+            ],
+            use_distributions=True if use_distributions > 0 else False,
+            seed_override=seed,
+        )
+
+        with CustomFilter("(almost) singular matrix"):
+            lca.lci()
+
+        if shares:
+            shares_indices = find_technology_indices(regions, technosphere_indices, geo, shares_filepath)
+            correlated_arrays = adjust_matrix_based_on_shares(
+                lca=lca,
+                shares_dict=shares_indices,
+                subshares=shares,
+                year=year,
+            )
+            if use_distributions > 0:
+                bw_correlated = get_subshares_matrix(correlated_arrays)
+
+                lca = bc.MultiLCA(
+                    demands=combined_fu,
+                    method_config={"impact_categories": []},
+                    data_objs=[bw_datapackage, bw_correlated],
+                    use_distributions=True,
+                    use_arrays=True,
+                )
+            else:
+                (
+                    bw_adjusted,
+                    technosphere_indices,
+                    biosphere_indices,
+                    uncertain_parameters,
+                    vars_info,
+                ) = get_adjusted_lca_matrices(
+                    filepaths=filepaths,
+                    model=model,
+                    scenario=scenario,
+                    year=year,
+                    correlated_arrays=correlated_arrays,
+                    mapping=mapping,
+                    regions=regions,
+                    variables=variables,
+                    geo=geo,
+                    remove_uncertainty=remove_uncertainty,
+                )
+
+                lca = bc.MultiLCA(
+                    demands=combined_fu,
+                    method_config={"impact_categories": []},
+                    data_objs=[bw_adjusted,],
+                    use_distributions=False,
+                    use_arrays=False
+                )        
+
+            with CustomFilter("(almost) singular matrix"):
+                lca.lci()
+
+        lca.uncertain_parameters = uncertain_parameters
+        lca.technosphere_indices = technosphere_indices
+        # lca.acts_category_idx_dict = acts_category_idx_dict
+        # lca.acts_location_idx_dict = acts_location_idx_dict
+
+        lca.technosphere_indices = {
+            k: v
+            for k, v in lca.technosphere_indices.items()
+            if v in {value for tup in lca.uncertain_parameters for value in tup}
+        }
+
+        characterization_matrix = fill_characterization_factors_matrices(
+            methods=methods,
+            biosphere_matrix_dict=lca.dicts.biosphere,
+            biosphere_dict=biosphere_indices,
+            debug=debug,
+        )
+
+        if debug:
+            logging.info(
+                f"Characterization matrix created. "
+                f"Shape: {characterization_matrix.shape}"
+            )
+
+        bar.update()
+        # Iterate over each region
+        results[region] = process_region_contribution(
+            (
+                model,
+                scenario,
+                year,
+                region,
+                variables,
+                fus_details,
+                scenarios,
+                units,
+                demand_cutoff,
+                lca,
+                characterization_matrix,
+                methods,
+                debug,
+                use_distributions,
+                uncertain_parameters,
+                limit,
+                limit_type,
+                total_range
             )
         )
 

@@ -11,7 +11,8 @@ from scipy.sparse import csr_matrix
 
 from .filesystem_constants import DATA_DIR
 
-LCIA_METHODS = DATA_DIR / "lcia_ei310.json"
+LCIA_METHODS = DATA_DIR / "lcia_with-cost-methods_ei310.json"
+
 
 
 def get_lcia_method_names():
@@ -21,6 +22,14 @@ def get_lcia_method_names():
 
     return [" - ".join(x["name"]) for x in data]
 
+def get_lcia_method_units_dict(methods: list = None):
+    with open(LCIA_METHODS, "r") as f:
+        data = json.load(f)
+
+    if methods:
+        data = [x for x in data if " - ".join(x["name"]) in methods]
+
+    return {" - ".join(x["name"]): x["unit"] for x in data}
 
 def format_lcia_method_exchanges(method):
     """
