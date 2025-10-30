@@ -11,7 +11,7 @@ from scipy.sparse import csr_matrix
 
 from .filesystem_constants import DATA_DIR
 
-LCIA_METHODS_EI310 = DATA_DIR / "lcia_ei310.json"
+LCIA_METHODS_EI310 = DATA_DIR / "lcia_with-cost-methods_ei310.json"
 LCIA_METHODS_EI311 = DATA_DIR / "lcia_ei311.json"
 
 
