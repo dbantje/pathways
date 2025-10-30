@@ -132,6 +132,7 @@ class Pathways:
         activities_mapping: [dict, str] = None,
         ecoinvent_version: str = "3.11",
         debug=True,
+        clean_cache=True,
     ):
         self.datapackage = datapackage
         self.data, dataframe, self.filepaths = validate_datapackage(
@@ -176,7 +177,8 @@ class Pathways:
         for k, v in self.classifications.items():
             self.reverse_classifications[v].append(k)
 
-        clean_cache_directory()
+        if clean_cache:
+            clean_cache_directory()
 
         if self.debug:
             logging.basicConfig(
