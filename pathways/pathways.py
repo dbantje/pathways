@@ -165,6 +165,7 @@ class Pathways:
         ecoinvent_version: str = "3.11",
         classification_system: str = "CPC",
         debug=True,
+        clean_cache=True,
     ):
         """Initialize the workflow and load datapackage metadata.
 
@@ -218,7 +219,8 @@ class Pathways:
         self.reverse_classifications["undefined"] = []
 
         # clean cache directory
-        clean_cache_directory()
+        if clean_cache:
+            clean_cache_directory()
 
         if self.debug:
             logging.info("#" * 600)
