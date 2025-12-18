@@ -43,6 +43,7 @@ from .utils import (
     load_mapping,
     load_units_conversion,
     resize_scenario_data,
+    read_indices_csv,
 )
 
 logger = logging.getLogger(__name__)
@@ -164,6 +165,7 @@ class Pathways:
         activities_mapping: [dict, str] = None,
         ecoinvent_version: str = "3.11",
         classification_system: str = "CPC",
+        classify_by_name: list = [],
         debug=True,
         clean_cache=True,
     ):
@@ -191,7 +193,10 @@ class Pathways:
         self.debug = debug
         self.scenarios = self._get_scenarios(dataframe)
         self.classification_system = classification_system
-        self._load_classifications()
+        if self.classification_system == "name":
+            self._load_name_classifications()
+        else:
+            self._load_classifications(classify_by_name=classify_by_name)
 
         # Apply activities_mapping to aggregate classifications
         if activities_mapping:
@@ -227,7 +232,7 @@ class Pathways:
             logging.info(f"Pathways initialized with datapackage: {datapackage}")
             print(f"Log file: {USER_LOGS_DIR / 'pathways.log'}")
 
-    def _load_classifications(self):
+    def _load_classifications(self, classify_by_name: list = []):
 
         # final structure: {(name, reference product): "code for chosen system"}
         self.classifications = {}
@@ -274,8 +279,11 @@ class Pathways:
 
                     key = (name, ref)
 
-                    self.classifications[key] = code
-                    n_used += 1
+                    if code.split(":")[0] in classify_by_name:
+                        self.classifications[key] = name
+                    else:
+                        self.classifications[key] = code
+                        n_used += 1
 
         fallback = load_classifications()  # dict[(name, ref) -> list[(system, code)]]
 
@@ -297,8 +305,10 @@ class Pathways:
             if code_for_system is None:
                 skipped_no_match += 1
                 continue
-
-            self.classifications[key] = code_for_system
+            if code_for_system.split(":")[0] in classify_by_name:
+                self.classifications[key] = name
+            else:
+                self.classifications[key] = code_for_system
             added_keys += 1
 
     def _extract_description(self, classification_code: str) -> str:
@@ -330,6 +340,19 @@ class Pathways:
         text = re.sub(r"[,\-\(\)\.]", " ", text)  # Replace punctuation with spaces
         text = " ".join(text.split())  # Normalize whitespace
         return text
+    
+    def _load_name_classifications(self) -> None:
+        """
+        Get list of all dataset keys (name, product) in the datapackage.
+        """
+        keys = []
+        for fp in self.filepaths:
+            if "A_matrix_index" in fp:
+                technosphere_inds = read_indices_csv(fp)
+                keys += [(k[0], k[1]) for k in technosphere_inds.keys()]
+        keys = list(set(keys))
+
+        self.classifications = {k: k[0] for k in keys}
 
     def _apply_activities_mapping(self, activities_mapping):
         """Aggregate classification codes using the provided mapping.

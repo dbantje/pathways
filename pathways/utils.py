@@ -26,7 +26,7 @@ from premise.geomap import Geomap
 
 from .filesystem_constants import DATA_DIR, DIR_CACHED_DB
 
-CLASSIFICATIONS = DATA_DIR / "classifications.csv"
+CLASSIFICATIONS = DATA_DIR / "classifications_interventionpaper.csv"
 UNITS_CONVERSION = DATA_DIR / "units_conversion.yaml"
 
 logger = logging.getLogger(__name__)
