@@ -153,7 +153,7 @@ def get_lca_matrices(
 
     fps = filter_filepaths(
         suffix=".csv",
-        contains=[model, str(year)] + scenario.replace(" ", "").split("-"),
+        contains=[model, f"/{str(year)}/"] + scenario.replace(" ", "").split("-"),
     )
     if len(fps) != 4:
         raise ValueError(
