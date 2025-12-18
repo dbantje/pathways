@@ -340,7 +340,7 @@ class Pathways:
         text = re.sub(r"[,\-\(\)\.]", " ", text)  # Replace punctuation with spaces
         text = " ".join(text.split())  # Normalize whitespace
         return text
-    
+
     def _load_name_classifications(self) -> None:
         """
         Get list of all dataset keys (name, product) in the datapackage.
