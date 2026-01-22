@@ -7607,7 +7607,7 @@ market for hard coal power plant,hard coal pulverised power plant 500MW,53262: P
 "carbon dioxide, captured, at cement production plant, using monoethanolamine","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "carbon dioxide, captured, at cement production plant, using direct separation","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "carbon dioxide, captured, at cement production plant, using oxyfuel","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
-"carbon dioxide, captured and stored, by afforestation","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"carbon dioxide, captured and stored, by land-use change","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "carbon dioxide, captured and stored, at wood burning power plant, pipeline 200km, storage 1000m","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "carbon dioxide, captured and stored, from a hydrogen production plant using steam methane reforming of biomethane","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "carbon dioxide, captured and stored, from a biomass fermentation plant","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
@@ -7980,7 +7980,6 @@ inverter production for home storage system,inverter for home storage system,462
 battery module system production,battery module system for home storage system module,46410: Primary cells and primary batteries,machinery and equipment
 "system controller production, for home storage system","system controller, for home storage system","42210: Reservoirs, tanks, vats and similar containers (other than for compressed or liquefied gas), of iron, steel or[…]",metal products
 "heat pump production, industrial, water-water, 100 kW","heat pump, water-water, 100kW",53262: Power plants,construction
-"1,1-difluoroethane production, HFC-152a","1,1-difluoroethane, HFC-152a","34150: Amine-function compounds; oxygen-function amino-compounds, except lysine and its esters and salts thereof and […]",chemicals and plastics
 "photovoltaic slanted-roof installation, 1.3 MWp, multi-Si, panel, mounted, on roof","photovoltaic slanted-roof installation, 1.3 MWp, multi-Si, panel, mounted, on roof",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
 "photovoltaic flat-roof installation, 156 kWp, multi-Si, on roof","photovoltaic flat-roof installation, 156 kWp, multi-Si, on roof",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
 "photovoltaic flat-roof installation, 156 kWp, single-Si, on roof","photovoltaic flat-roof installation, 156 kWp, single-Si, on roof",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
@@ -8078,7 +8077,6 @@ photovoltaic cell factory,photovoltaic cell factory,53269: Other constructions f
 "photovoltaic panel, multi-Si, at regional storage","photovoltaic panel, multi-Si, at regional storage","47150: Diodes, transistors and similar semi-conductor devices; photosensitive semi-conductor devices; light emitting […]",machinery and equipment
 "photovoltaic panel, perovskite-Si-tandem, at plant","photovoltaic panel, perovskite-Si-tandem, at plant",53262: Power plants,construction
 "photovoltaic panel, single-Si, at regional storage","photovoltaic panel, single-Si, at regional storage","47150: Diodes, transistors and similar semi-conductor devices; photosensitive semi-conductor devices; light emitting […]",machinery and equipment
-"photovoltaics, electric installation for 3kWp module, at building","photovoltaic plant, electric installation for 3kWp module",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
 "polyvinylalcohol, at plant","polyvinylalcohol, at plant",53262: Power plants,construction
 "polyvinylbutyral foil, at plant","polyvinylbutyral foil, at plant",53262: Power plants,construction
 "polyvinylbutyral, powder, at plant","polyvinylbutyral, powder, at plant",53262: Power plants,construction
@@ -9338,7 +9336,6 @@ limestone crushing and washing,crushed and washed limestone,"15200: Gypsum; anhy
 "electricity, used in passenger train","electricity, high voltage",17100: Electrical energy,electricity production
 "electricity, used in passenger car","electricity, low voltage",17100: Electrical energy,electricity production
 xanthate production,xanthate,35499: Other chemical products n.e.c.,chemicals and plastics
-carbon disulfide production,carbon disulfide,"34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "transport, freight, sea, container ship, powered with hydrogen","transport, freight, sea, container ship",65213: Coastal and transoceanic water transport services of intermodal containers by container ships,shipping transport
 "transport, freight, sea, container ship, powered with electricity","transport, freight, sea, container ship",65213: Coastal and transoceanic water transport services of intermodal containers by container ships,shipping transport
 "transport, freight, sea, container ship, powered with liquid ammonia","transport, freight, sea, container ship",65213: Coastal and transoceanic water transport services of intermodal containers by container ships,shipping transport
@@ -9381,64 +9378,27 @@ production of alkaline solution from sodium hydroxide of 50 wt-%,alkaline soluti
 "steel production, electrowinning-electric arc furnace, low-alloyed","steel, low-alloyed",41122: Alloy steel in ingots or other primary forms and semi-finished products of alloy steel,basic metals
 "steel production, electrowinning-electric arc furnace, unalloyed","steel, unalloyed",41122: Alloy steel in ingots or other primary forms and semi-finished products of alloy steel,basic metals
 ultrafine grinding of iron ore,"iron ore, ultrafine ground","41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
-"treatment of used LFP battery cell, hydrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
-"treatment of used LFP battery cell, hydrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used LFP battery cell, hydrometallurgical treatment",lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
-"treatment of used LFP battery cell, pyrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
-"treatment of used LFP battery cell, pyrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-treatment of used Li-ion battery with hydrometallurgical treatment,manganese sulfate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
-treatment of used Li-ion battery with hydrometallurgical treatment,cobalt sulfate,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
-treatment of used Li-ion battery with hydrometallurgical treatment,lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
-treatment of used Li-ion battery with hydrometallurgical treatment,nickel sulfate,41422: Unwrought nickel,basic metals
-treatment of used Li-ion battery with pyrometallurgical treatment,cobalt sulfate,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
-treatment of used Li-ion battery with pyrometallurgical treatment,lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
-treatment of used Li-ion battery with pyrometallurgical treatment,nickel sulfate,41422: Unwrought nickel,basic metals
-"offgas cleaning, pyrolysis",offgas cleaning,"34651: Ammonia, anhydrous",chemicals and plastics
-"organic solution, with cyanex272",organic solvent,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
-cyanex272 production,cyanex272,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
-sodium hypophosphite production,sodium hypophosphite,35499: Other chemical products n.e.c.,chemicals and plastics
-"treatment of used SIB battery cell, hydrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
-"treatment of used SIB battery cell, hydrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used SIB battery cell, hydrometallurgical treatment",nickel carbonate,41422: Unwrought nickel,basic metals
-"treatment of used SIB battery cell, hydrometallurgical treatment",manganese dioxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
-"treatment of used SIB battery cell, pyrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
-"treatment of used SIB battery cell, pyrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used SIB battery cell, pyrometallurgical treatment",nickel carbonate,41422: Unwrought nickel,basic metals
-"treatment of used SIB battery cell, pyrometallurgical treatment",manganese dioxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
-"treatment of used electrolyzer Stack, PFSA membrane recovery, 1MWe, PEM, solvent dissolution",tetrafluoroethylene,"34730: Polymers of vinyl chloride or other halogenated olefins, in primary forms",chemicals and plastics
-"treatment of used electrolyzer Stack, PGM recovery, 1MWe, PEM, hydrometallurgy",iridium,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
-"treatment of used electrolyzer Stack, PGM recovery, 1MWe, PEM, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
-cyanex production,cyanex,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
-"treatment of used electrolyzer Stack, 1MWe, AEC","nickel, class 1",41422: Unwrought nickel,basic metals
-"treatment of used electrolyzer Stack, 1MWe, AEC, platinum recovery, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
-"treatment of used electrolyzer Stack, 1MWe, AEC","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
-"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",yttrium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
-"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",zirconium oxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
-"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment","nickel, class 1",41422: Unwrought nickel,basic metals
-"treatment of used solide oxide cell, cathode recovery, nitric acid route",cobalt oxide,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
-"treatment of used solide oxide cell, cathode recovery, nitric acid route",lanthanum oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
-"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy","carbon, black","34231: Chemical elements n.e.c.; inorganic acids except phosphoric, nitric and sulphonitric; inorganic oxygen compoun[…]",chemicals and plastics
-"treatment of used fuel cell balance of plant, 1kWe, PEM","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
-"treatment of used fuel cell stack, 1kWe, PEM","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
-"treatment of used CIGS PV module, double green process",gallium,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
-"treatment of used CIGS PV module, double green process",indium,"34231: Chemical elements n.e.c.; inorganic acids except phosphoric, nitric and sulphonitric; inorganic oxygen compoun[…]",chemicals and plastics
-"treatment of used CIGS PV module, double green process","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used perovskite module, delamination, pyrolysis, chemical treatment",silver,"41310: Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms, or in powder […]",basic metals
-"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
-"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
-"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",terbium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
-"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",neodymium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
-"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",praseodymium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
-"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",dysprosium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
 "softwood forestry, spruce, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"softwood forestry, spruce, sustainable forest management","bundle, energy wood, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "softwood forestry, pine, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"softwood forestry, pine, sustainable forest management","bundle, energy wood, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, birch, sustainable forest management","sawlog and veneer log, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "hardwood forestry, birch, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, birch, sustainable forest management","pulpwood, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, birch, sustainable forest management","bundle, energy wood, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, oak, sustainable forest management","pulpwood, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, oak, sustainable forest management","sawlog and veneer log, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "hardwood forestry, oak, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "hardwood forestry, beech, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, beech, sustainable forest management","pulpwood, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"hardwood forestry, beech, sustainable forest management","sawlog and veneer log, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "hardwood forestry, mixed species, sustainable forest management","wood chips, wet, measured as dry mass","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
+"sawing, softwood","slab and siding, softwood, wet, measured as dry mass",31230: Wood in chips or particles,forestry and wood products
 "sawing, softwood","sawnwood, softwood, raw",31230: Wood in chips or particles,forestry and wood products
+"sawing, softwood","sawdust, loose, wet, measured as dry mass",31230: Wood in chips or particles,forestry and wood products
+"sawing, hardwood","sawdust, loose, wet, measured as dry mass",31230: Wood in chips or particles,forestry and wood products
 "sawing, hardwood","sawnwood, hardwood, raw",31230: Wood in chips or particles,forestry and wood products
+"sawing, hardwood","slab and siding, hardwood, wet, measured as dry mass",31230: Wood in chips or particles,forestry and wood products
 "hardwood forestry, eucalyptus ssp., sustainable forest management","sawlog and veneer log, eucalyptus ssp., measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "market for sawlog and veneer log, hardwood, measured as solid wood under bark","sawlog and veneer log, hardwood, measured as solid wood under bark","3110: Wood, sawn or chipped lengthwise, sliced or peeled, of a thickness exceeding 6 mm; railway or tramway sleepers […]",forestry and wood products
 "market for lignocellulosic biomass, used as fuel",lignocellulosic biomass,86119: Other support services to crop production,other services
@@ -9468,6 +9428,7 @@ cyanex production,cyanex,34160: Organo-sulphur compounds and other organo-inorga
 "market for steel, low-alloyed","steel, low-alloyed","41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "market for steel, unalloyed","steel, unalloyed","41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 market for petrol,petrol,33311: Motor gasoline,oil and gas products
+market for kerosene,kerosene,33371: Kerosene,oil and gas products
 "market for natural gas, high pressure","natural gas, high pressure",33360: Gas oil,oil and gas products
 "market group for natural gas, high pressure","natural gas, high pressure",33360: Gas oil,oil and gas products
 "market for natural gas, low pressure","natural gas, low pressure",33360: Gas oil,oil and gas products
@@ -9500,7 +9461,6 @@ market for petrol,petrol,33311: Motor gasoline,oil and gas products
 "market for wind turbine, small-scale, 6kW, onshore, direct drive","wind turbine, small-scale, 6kW, onshore",53262: Power plants,construction
 "market for wind turbine, 2.3MW, onshore, direct drive","wind turbine, 2.3MW, onshore",53262: Power plants,construction
 "wind turbine construction, 2MW, onshore, direct drive","wind turbine, 2MW, onshore",53262: Power plants,construction
-"gallium production, semiconductor-grade","gallium, semiconductor-grade","34150: Amine-function compounds; oxygen-function amino-compounds, except lysine and its esters and salts thereof and […]",chemicals and plastics
 heavy mineral sand quarry operation,"ilmenite, 54% titanium dioxide","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 ilmenite - magnetite mine operation,"ilmenite, 54% titanium dioxide","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "market for ilmenite, 54% titanium dioxide","ilmenite, 54% titanium dioxide","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
@@ -9517,7 +9477,7 @@ market for carbon dioxide removal,"carbon dioxide, captured and stored","34210: 
 "market for transport, freight, lorry, 40 metric ton","transport, freight, lorry",6511: Road transport services of freight,road transport
 "market for transport, freight, train","transport, freight, train",6512: Railway transport services of freight,rail transport
 "natural gas, burned in gas turbine","natural gas, burned in gas turbine",33360: Gas oil,oil and gas products
-"methanol production, biomass gasification","methanol, from biomass","34710: Polymers of ethylene, in primary forms",chemicals and plastics
+"1,1-difluoroethane production, HFC-152a","1,1-difluoroethane, HFC-152a","34150: Amine-function compounds; oxygen-function amino-compounds, except lysine and its esters and salts thereof and […]",chemicals and plastics
 "CCU-PP production, granulate","CCU-PP, granulate","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "CO2, captured from cement plant (Hoppe et al.)","CO2, captured from cement plant","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "HDPE production, CCU-based","CCU-HDPE, granulate","34710: Polymers of ethylene, in primary forms",chemicals and plastics
@@ -9615,7 +9575,7 @@ NMC811 oxide,NMC811 oxide,46410: Primary cells and primary batteries,machinery a
 "battery cell production, Li-ion, NMC523","battery cell, Li-ion, NMC523",46410: Primary cells and primary batteries,machinery and equipment
 "battery production, Li-ion, NMC523","battery, Li-ion, NMC523",46410: Primary cells and primary batteries,machinery and equipment
 "bio-propylene production, from methanol-to-propylene conversion","propylene, biogenic","34710: Polymers of ethylene, in primary forms",chemicals and plastics
-"carbon dioxide, captured and stored, by land-use change","carbon dioxide, captured","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+carbon disulfide production,carbon disulfide,"34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "cathode current collector, LFP","cathode current collector, LFP",46410: Primary cells and primary batteries,machinery and equipment
 "cathode paste, LFP","cathode paste, LFP",46410: Primary cells and primary batteries,machinery and equipment
 "cathode, NMC111, for Li-ion battery","cathode, NMC111, for Li-ion battery",46410: Primary cells and primary batteries,machinery and equipment
@@ -9625,12 +9585,23 @@ NMC811 oxide,NMC811 oxide,46410: Primary cells and primary batteries,machinery a
 "cement production, general use (GU), average","cement, general use (GU)","37440: Portland cement, aluminous cement, slag cement and similar hydraulic cements, except in the form of clinkers",other products
 "cement production, general use limestone (GUL)","cement, general use limestone (GUL)","37440: Portland cement, aluminous cement, slag cement and similar hydraulic cements, except in the form of clinkers",other products
 "cement production, general use limestone (GUL), average","cement, general use limestone (GUL)","37440: Portland cement, aluminous cement, slag cement and similar hydraulic cements, except in the form of clinkers",other products
+"chlor-alkali electrolysis, diaphragm cell_chlore_hydrogen_ammonia","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"chlor-alkali electrolysis, diaphragm cell_chlore_hydrogen_chemicals","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"chlor-alkali electrolysis, diaphragm cell_chlore_hydrogen_others","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"chlor-alkali electrolysis, diaphragm cell_chlore_hydrogen_steel","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "crude oil, at production","crude oil, at production",33360: Gas oil,oil and gas products
 "crude oil, at production offshore","crude oil, at production offshore",33360: Gas oil,oil and gas products
 "crude oil, at production onshore","crude oil, at production onshore",33360: Gas oil,oil and gas products
 "crude oil, import mix, at long distance transport","crude oil, import mix, at long distance transport",33360: Gas oil,oil and gas products
+cyanex production,cyanex,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
+cyanex272 production,cyanex272,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
 "discharge, produced water, offshore","discharge, produced water, offshore",33360: Gas oil,oil and gas products
 "discharge, produced water, onshore","discharge, produced water, onshore",33360: Gas oil,oil and gas products
+"electricity production, from hydrogen, with gas turbine, for grid-balancing, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"electricity production, from stationary battery, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"electricity production, from vehicle-to-grid, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"electricity production, hydro, pumped storage, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"electricity supply, high voltage, from vanadium-redox flow battery system, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
 "electrolyte, LFP","electrolyte, LFP",46410: Primary cells and primary batteries,machinery and equipment
 "ethylene glycols production, thermal hydrolysis of ethylene oxide (Ritzen et al.)","ethylene glycol, biobased","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "ethylene oxide production, ethylene oxidation (Ritzen et al.)","ethylene oxide, biobased","34710: Polymers of ethylene, in primary forms",chemicals and plastics
@@ -9644,7 +9615,32 @@ ethylene production from brasilian ethanol (Ritzen et al.),"ethylene, biobased (
 "heavy duty truck, fuel cell electric, 32t gross weight, long haul",heavy duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
 "heavy duty truck, fuel cell electric, 40t gross weight, long haul",heavy duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
 "heavy duty truck, fuel cell electric, 60t gross weight, long haul",heavy duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
+"high voltage grid, per kWh, FE2050","transmitted electricity, high voltage",17100: Electrical energy,electricity production
+"hydrogen production, gaseous, 30 bar, from PEM electrolysis, from grid electricity, domestic, FE2050","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, 30 bar, from PEM electrolysis, from grid electricity, domestic, FE2050_electrolysis_hydrogen_ammonia","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, 30 bar, from PEM electrolysis, from grid electricity, domestic, FE2050_electrolysis_hydrogen_chemicals","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, 30 bar, from PEM electrolysis, from grid electricity, domestic, FE2050_electrolysis_hydrogen_others","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, 30 bar, from PEM electrolysis, from grid electricity, domestic, FE2050_electrolysis_hydrogen_steel","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen production, gaseous, 30 bar, from PEM electrolysis, from solar photovoltaic electricity","hydrogen, gaseous, 30 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_chemical_hydrogen_ammonia","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_chemical_hydrogen_chemicals","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_chemical_hydrogen_others","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_chemical_hydrogen_refinery","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_chemical_hydrogen_steel","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_oil_refining_hydrogen_ammonia","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_oil_refining_hydrogen_chemicals","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_oil_refining_hydrogen_others","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, gaseous, petroleum refinery operation_oil_refining_hydrogen_steel","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_ammonia_hydrogen_ammonia","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_ammonia_hydrogen_chemicals","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_ammonia_hydrogen_others","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_ammonia_hydrogen_refinery","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_ammonia_hydrogen_steel","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_methane_reforming_hydrogen_ammonia","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_methane_reforming_hydrogen_chemicals","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_methane_reforming_hydrogen_others","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen production, steam methane reforming_methane_reforming_hydrogen_steel","hydrogen, gaseous, low pressure","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen storage, for grid-balancing, FE2050","hydrogen, gaseous, 80 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen supply, hydrogen, from biogas, by H2 pipeline, as gaseous, over 500 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen supply, hydrogen, from biogas, by ship, as liquid, over 2000 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen supply, hydrogen, from biogas, by truck, as gaseous, over 500 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
@@ -9729,6 +9725,11 @@ ethylene production from brasilian ethanol (Ritzen et al.),"ethylene, biobased (
 "hydrogen supply, hydrogen, from solar, by ship, as liquid, over 2000 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen supply, hydrogen, from solar, by truck, as gaseous, over 500 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "hydrogen supply, hydrogen, from solar, by truck, as liquid, over 500 km","hydrogen, 700 bar","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen, recovered from coke oven gas, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen, recovered from coke oven gas, FE2050_coking_hydrogen_chemicals","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen, recovered from coke oven gas, FE2050_coking_hydrogen_others","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen, recovered from coke oven gas, FE2050_coking_hydrogen_steel","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"hydrogen, recovered from coke oven gas, with carbon capture and storage, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "iron porduction, with natural gas-based direct reduction",iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "iron production, by electrowinning",pig iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "iron production, with natural gas-based direct reduction, with carbon capture and storage",pig iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
@@ -9747,9 +9748,29 @@ lithium iron phosphate [LiFePO4],lithium iron phosphate [LiFePO4],46410: Primary
 "market for battery, Li-oxygen, Li-O2, rechargeable","battery, Li-O2, rechargeable",46410: Primary cells and primary batteries,machinery and equipment
 "market for battery, Li-sulfur, Li-S, rechargeable","battery, Li-S, rechargeable",46410: Primary cells and primary batteries,machinery and equipment
 "market for biomass, used as fuel","biomass, used as fuel",86119: Other support services to crop production,other services
+"market for compressed gas, high pressure, FE2050",compressed gas,33360: Gas oil,oil and gas products
+"market for compressed gas, low pressure, FE2050",compressed gas,33360: Gas oil,oil and gas products
+"market for diesel, FE2050",diesel,33360: Gas oil,oil and gas products
+"market for electricity production, direct production, high voltage, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity production, import, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity production, storage production, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, from direct French production, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, from direct production and import, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, from import, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, from storage, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, high voltage, FE2050","electricity, high voltage",17100: Electrical energy,electricity production
+"market for electricity, low voltage, FE2050","electricity, low voltage",17100: Electrical energy,electricity production
+"market for electricity, medium voltage, FE2050","electricity, medium voltage",17100: Electrical energy,electricity production
 "market for graphite, battery grade","graphite, battery grade",46410: Primary cells and primary batteries,machinery and equipment
+"market for hydrogen, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"market for hydrogen, gaseous, for ammonia use, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"market for hydrogen, gaseous, for chemicals use, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"market for hydrogen, gaseous, for refinery use, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"market for hydrogen, gaseous, for steel use, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
+"market for hydrogen, gaseous, for various use, FE2050","hydrogen, gaseous","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "market for lignocellulosic biomass, used as fuel","lignocellulosic biomass, used as fuel",86119: Other support services to crop production,other services
 market for p-xylene,"p-xylene, biobased","34710: Polymers of ethylene, in primary forms",chemicals and plastics
+"market for petrol, FE2050",petrol,33360: Gas oil,oil and gas products
 "medium duty truck, battery electric, 18t gross weight, long haul",medium duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
 "medium duty truck, battery electric, 26t gross weight, long haul",medium duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
 "medium duty truck, fuel cell electric, 18t gross weight, long haul",medium duty truck,49113: Motor cars and other motor vehicles principally designed for the transport of persons (except public-transport[…],machinery and equipment
@@ -9785,7 +9806,9 @@ methanol synthesis (Hoppe et al.),"methanol, from CCU","34710: Polymers of ethyl
 "natural gas, vented","natural gas, vented",33360: Gas oil,oil and gas products
 nickel carbonate production,nickel carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
 "offgas cleaning, pyrolysis","organic solution, with cyanex272",34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
+"organic solution, with cyanex272",organic solvent,34160: Organo-sulphur compounds and other organo-inorganic compounds; heterocyclic compounds n.e.c.; nucleic acids an[…],chemicals and plastics
 "p-xylene production, biobased","p-xylene, biobased (Ritzen et al.)","34710: Polymers of ethylene, in primary forms",chemicals and plastics
+"photovoltaics, electric installation for 3kWp module, at building","photovoltaic plant, electric installation for 3kWp module",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
 "pig iron production, TGR-BF/BOF",pig iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "pig iron production, TGR-BF/BOF + CCS",pig iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "pig iron production, blast furnace with CCS",pig iron,"41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
@@ -9797,6 +9820,7 @@ nickel carbonate production,nickel carbonate,34240: Phosphates of triammonium; s
 "propylene, from methanol (Hoppe et al.)","propylene, from methanol (Hoppe et al.)","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "purified terephthalic acid production, biobased","terephthalic acid, biobased","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "separator, LFP","separator, LFP",46410: Primary cells and primary batteries,machinery and equipment
+sodium hypophosphite production,sodium hypophosphite,35499: Other chemical products n.e.c.,chemicals and plastics
 softwood hydrolysate production (Ritzen et al.),softwood hydrolysate (Ritzen et al.),"34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "steel production, 3.2% silicon alloy, for grain oriented electrical steel","steel, 3.2% silicon alloy, for grain oriented electrical steel","41111: Pig iron and spiegeleisen in pigs, blocks or other primary forms",basic metals
 "steel production, blast furnace-basic oxygen furnace, low-alloyed, with carbon capture and storage","steel, low-alloyed",41122: Alloy steel in ingots or other primary forms and semi-finished products of alloy steel,basic metals
@@ -9939,6 +9963,51 @@ softwood hydrolysate production (Ritzen et al.),softwood hydrolysate (Ritzen et 
 "transport, natural gas, offshore pipeline, long distance","transport, natural gas, offshore pipeline, long distance",33360: Gas oil,oil and gas products
 "transport, natural gas, onshore pipeline, long distance","transport, natural gas, onshore pipeline, long distance",33360: Gas oil,oil and gas products
 "transport, passenger car, unspecified","transport, passenger car","64119: Other land transportation services of passengers, n.e.c.",road transport
+"treatment of used CIGS PV module, double green process","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used CIGS PV module, double green process",gallium,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
+"treatment of used CIGS PV module, double green process",indium,"34231: Chemical elements n.e.c.; inorganic acids except phosphoric, nitric and sulphonitric; inorganic oxygen compoun[…]",chemicals and plastics
+"treatment of used LFP battery cell, hydrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
+"treatment of used LFP battery cell, hydrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used LFP battery cell, hydrometallurgical treatment",lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
+"treatment of used LFP battery cell, pyrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
+"treatment of used LFP battery cell, pyrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+treatment of used Li-ion battery with hydrometallurgical treatment,cobalt sulfate,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
+treatment of used Li-ion battery with hydrometallurgical treatment,lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
+treatment of used Li-ion battery with hydrometallurgical treatment,manganese sulfate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
+treatment of used Li-ion battery with hydrometallurgical treatment,nickel sulfate,41422: Unwrought nickel,basic metals
+treatment of used Li-ion battery with pyrometallurgical treatment,cobalt sulfate,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
+treatment of used Li-ion battery with pyrometallurgical treatment,lithium carbonate,34240: Phosphates of triammonium; salts and peroxysalts of inorganic acids and metals n.e.c.,chemicals and plastics
+treatment of used Li-ion battery with pyrometallurgical treatment,nickel sulfate,41422: Unwrought nickel,basic metals
+"treatment of used SIB battery cell, hydrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
+"treatment of used SIB battery cell, hydrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used SIB battery cell, hydrometallurgical treatment",manganese dioxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
+"treatment of used SIB battery cell, hydrometallurgical treatment",nickel carbonate,41422: Unwrought nickel,basic metals
+"treatment of used SIB battery cell, pyrometallurgical treatment","aluminium, wrought alloy",41431: Unwrought aluminium,basic metals
+"treatment of used SIB battery cell, pyrometallurgical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used SIB battery cell, pyrometallurgical treatment",manganese dioxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
+"treatment of used SIB battery cell, pyrometallurgical treatment",nickel carbonate,41422: Unwrought nickel,basic metals
+"treatment of used electrolyzer Stack, 1MWe, AEC","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
+"treatment of used electrolyzer Stack, 1MWe, AEC","nickel, class 1",41422: Unwrought nickel,basic metals
+"treatment of used electrolyzer Stack, 1MWe, AEC, platinum recovery, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
+"treatment of used electrolyzer Stack, PFSA membrane recovery, 1MWe, PEM, solvent dissolution",tetrafluoroethylene,"34730: Polymers of vinyl chloride or other halogenated olefins, in primary forms",chemicals and plastics
+"treatment of used electrolyzer Stack, PGM recovery, 1MWe, PEM, hydrometallurgy",iridium,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
+"treatment of used electrolyzer Stack, PGM recovery, 1MWe, PEM, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
+"treatment of used fuel cell balance of plant, 1kWe, PEM","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
+"treatment of used fuel cell stack, 1kWe, PEM","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy","carbon, black","34231: Chemical elements n.e.c.; inorganic acids except phosphoric, nitric and sulphonitric; inorganic oxygen compoun[…]",chemicals and plastics
+"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy",platinum,"41330: Platinum, unwrought or in semi-manufactured forms, or in powder form",basic metals
+"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",dysprosium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
+"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",neodymium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
+"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",praseodymium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
+"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",terbium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
+"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","aluminium, cast alloy",41431: Unwrought aluminium,basic metals
+"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","copper, cathode","41413: Refined copper and copper alloys, unwrought; master alloys of copper",basic metals
+"treatment of used perovskite module, delamination, pyrolysis, chemical treatment",silver,"41310: Silver (including silver plated with gold or platinum), unwrought or in semi-manufactured forms, or in powder […]",basic metals
+"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment","nickel, class 1",41422: Unwrought nickel,basic metals
+"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",yttrium oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
+"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",zirconium oxide,34220: Zinc oxide; zinc peroxide; chromium oxides and hydroxides; manganese oxides; iron oxides and hydroxides; earth[…],chemicals and plastics
+"treatment of used solide oxide cell, cathode recovery, nitric acid route",cobalt oxide,"41601: Tungsten, molybdenum, tantalum, magnesium, cobalt, cadmium, titanium, zirconium, beryllium, gallium, hafnium, […]",basic metals
+"treatment of used solide oxide cell, cathode recovery, nitric acid route",lanthanum oxide,"34290: Compounds of rare earth metals, of yttrium or of scandium",chemicals and plastics
 "vinyl chloride production, biobased","vinyl chloride, biobased","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "well for exploration and production, offshore","well for exploration and production, offshore",33360: Gas oil,oil and gas products
 "well for exploration and production, onshore","well for exploration and production, onshore",33360: Gas oil,oil and gas products
@@ -10026,9 +10095,6 @@ graphite ore mining,"graphite ore, mined","14100: Iron ores and concentrates, ot
 zinc mine operation,"germanium, concentrate",14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining
 "copper mine operation and beneficiation, sulfide ore",rhenium,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining
 "market for cathode, graphite","cathode, graphite",14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
-"treatment of used SIB battery cell, hydrometallurgical treatment",magnesium hydroxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
-"treatment of used SIB battery cell, hydrometallurgical treatment",titanium dioxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
-"treatment of used SIB battery cell, pyrometallurgical treatment",titanium dioxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 aluminium hydroxide production,aluminium hydroxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 market for aluminium hydroxide,aluminium hydroxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 aluminium oxide production,"aluminium oxide, metallurgical",14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
@@ -10181,7 +10247,6 @@ primary zinc production from concentrate,silver,14290: Other non-ferrous metal o
 "processing of anode slime from electrorefining of copper, anode",silver,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 silver-gold mine operation with refinery,silver,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining
 market for silver,silver,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
-sodium borate mine operation and beneficiation,sodium borates,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining
 market for sodium borates,sodium borates,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 spodumene production,spodumene,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 market for spodumene,spodumene,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
@@ -10217,6 +10282,9 @@ heavy mineral sand quarry operation,zircon,14290: Other non-ferrous metal ores a
 market for zircon,zircon,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 "high-grade gallium production, from low-grade gallium","gallium, high-grade",14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 sodium borates mine operation and beneficiation,sodium borates,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining
+"treatment of used SIB battery cell, hydrometallurgical treatment",magnesium hydroxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
+"treatment of used SIB battery cell, hydrometallurgical treatment",titanium dioxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
+"treatment of used SIB battery cell, pyrometallurgical treatment",titanium dioxide,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),basic metals
 "coke production, dry quenching",coal gas,"17200: Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",other gases
 biogas purification to biomethane by membrane technique,"biomethane, high pressure","17200: Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",biogas
 "coke production, wet quenching",coal gas,"17200: Coal gas, water gas, producer gas and similar gases, other than petroleum gases and other gaseous hydrocarbons",other gases
@@ -10704,6 +10772,8 @@ primary zinc production from concentrate,"heat, from steam, in chemical industry
 "heat, residential, electric storage heater, using electricity from grid","heat, from residential heating system",17300: Steam and hot water,heat production
 "soft wood chips from forest, burned in furnace 1000kW",heat,17300: Steam and hot water,heat production
 "wood logs, burned in wood stove 6kW",heat,17300: Steam and hot water,FE use buildings
+"forest residues, burned in furnace 1000kW",heat,17300: Steam and hot water,heat production
+"heat production, residues from forest, at furnace 1000kW","heat, district or industrial, other than natural gas",17300: Steam and hot water,heat production
 "hydrogen, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
 "natural gas, burned in residential natural gas boiler <100kW",heat,17300: Steam and hot water,FE use buildings
 "natural gas, synthetic, burned in residential natural gas boiler <100kW",heat,17300: Steam and hot water,FE use buildings
@@ -10720,12 +10790,24 @@ primary zinc production from concentrate,"heat, from steam, in chemical industry
 "propane, burned in industrial furnace >100kW",heat,17300: Steam and hot water,heat production
 "methanol, synthetic, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
 "methanol from biomass, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
+"heat, residential, by combustion of light fuel oil, from cellulosic non-residual biomass, using boiler","heat, from residential heating system",17300: Steam and hot water,FE use buildings
+"light fuel oil, from non-residual cellulosic biomass, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
+"heat, residential, by combustion of light fuel oil, from cellulosic residual biomass, using boiler","heat, from residential heating system",17300: Steam and hot water,FE use buildings
+"light fuel oil, from residual cellulosic biomass, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
+"heat, residential, by combustion of light fuel oil, from oily biomass, using boiler","heat, from residential heating system",17300: Steam and hot water,FE use buildings
+"light fuel oil, from oily biomass, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
 "methanol from coal, burned in residential boiler",heat,17300: Steam and hot water,FE use buildings
 "natural gas, synthetic, burned in gas turbine",heat,17300: Steam and hot water,heat production
-"biodiesel, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual oily biomass, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
+"biodiesel, from non-residual oily biomass, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
+"biodiesel, from non-residual cellulosic biomass, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual cellulosic biomass, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
 "diesel from coal, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
 "diesel, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
-"biodiesel, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual oily biomass, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
+"biodiesel, from non-residual oily biomass, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
+"biodiesel, from non-residual cellulosic biomass, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual cellulosic biomass, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
 "diesel, synthetic, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
 "compressed gas, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
 "compressed gas, synthetic, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
@@ -10734,6 +10816,9 @@ primary zinc production from concentrate,"heat, from steam, in chemical industry
 "hydrogen, used in a fuel cell in a hydrogen motorcycle",heat,17300: Steam and hot water,road transport
 "petrol, burned in motorcycle",heat,17300: Steam and hot water,road transport
 "bioethanol, burned in motorcycle",heat,17300: Steam and hot water,road transport
+"bioethanol, from eucalyptus, burned in motorcycle",heat,17300: Steam and hot water,road transport
+"bioethanol, from residues, burned in motorcycle",heat,17300: Steam and hot water,road transport
+"bioethanol, from sugar crops, burned in motorcycle",heat,17300: Steam and hot water,road transport
 "petrol, synthetic, burned in motorcycle",heat,17300: Steam and hot water,road transport
 "diesel, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
 "diesel, synthetic, burned in heavy duty vehicle",heat,17300: Steam and hot water,road transport
@@ -10743,20 +10828,34 @@ primary zinc production from concentrate,"heat, from steam, in chemical industry
 "compressed gas, synthetic, burned in heavy duty vehicle",heat,17300: Steam and hot water,road transport
 "kerosene, burned in aircraft",heat,17300: Steam and hot water,aviation
 "kerosene, from biomass, burned in aircraft",heat,17300: Steam and hot water,aviation
+"kerosene, from cellulosic non-residual biomass, burned in aircraft",heat,17300: Steam and hot water,aviation
+"kerosene, from cellulosic residual biomass, burned in aircraft",heat,17300: Steam and hot water,aviation
+"kerosene, from non-residual oily biomass, burned in aircraft",heat,17300: Steam and hot water,aviation
 "kerosene, synthetic, burned in aircraft",heat,17300: Steam and hot water,aviation
 "hydrogen, burned in aircraft",heat,17300: Steam and hot water,aviation
 "heavy fuel oil, burned in container ship",heat,17300: Steam and hot water,shipping transport
 "diesel, synthetic, burned in container ship",heat,17300: Steam and hot water,shipping transport
+"biodiesel, from residual cellulosic biomass, burned in container ship",heat,17300: Steam and hot water,shipping transport
+"biodiesel, from non-residual cellulosic biomass, burned in container ship",heat,17300: Steam and hot water,shipping transport
+"biodiesel, from non-residual oily biomass, burned in container ship",heat,17300: Steam and hot water,shipping transport
 "methanol from biomass, burned in container ship",heat,17300: Steam and hot water,shipping transport
 "hydrogen, used in a fuel cell in container ship",heat,17300: Steam and hot water,shipping transport
 "hydrogen, used in a fuel cell in a passenger train",heat,17300: Steam and hot water,rail transport
 "diesel, burned in passenger train",heat,17300: Steam and hot water,rail transport
 "diesel, synthetic, burned in passenger train",heat,17300: Steam and hot water,rail transport
-"biodiesel, burned in passenger train",heat,17300: Steam and hot water,rail transport
+"biodiesel, from residual oily biomass, burned in passenger train",heat,17300: Steam and hot water,rail transport
+"biodiesel, from non-residual oily biomass, burned in passenger train",heat,17300: Steam and hot water,rail transport
+"biodiesel, from non-residual cellulosic biomass, burned in passenger train",heat,17300: Steam and hot water,rail transport
+"biodiesel, from residual cellulosic biomass, burned in passenger train",heat,17300: Steam and hot water,rail transport
 "diesel, burned in passenger car",heat,17300: Steam and hot water,road transport
-"biodiesel, burned in passenger car",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual oily biomass, burned in passenger car",heat,17300: Steam and hot water,road transport
+"biodiesel, from non-residual cellulosic biomass, burned in passenger car",heat,17300: Steam and hot water,road transport
+"biodiesel, from residual cellulosic biomass, burned in passenger car",heat,17300: Steam and hot water,road transport
 "diesel, synthetic, burned in passenger car",heat,17300: Steam and hot water,road transport
 "petrol, burned in passenger car",heat,17300: Steam and hot water,road transport
+"bioethanol, from eucalyptus, burned in passenger car",heat,17300: Steam and hot water,road transport
+"bioethanol, from forest residues, burned in passenger car",heat,17300: Steam and hot water,road transport
+"bioethanol, from sugar crops, burned in passenger car",heat,17300: Steam and hot water,road transport
 "hydrogen, used in a fuel cell in a passenger car",heat,17300: Steam and hot water,road transport
 "compressed gas, burned in passenger car",heat,17300: Steam and hot water,road transport
 "compressed gas, synthetic, burned in passenger car",heat,17300: Steam and hot water,road transport
@@ -10765,7 +10864,10 @@ primary zinc production from concentrate,"heat, from steam, in chemical industry
 "market for heat, for buildings","heat, central or small-scale",17300: Steam and hot water,heat production
 "market for heat, district or industrial","heat, district or industrial",17300: Steam and hot water,heat production
 "market for energy, for direct air capture and storage","energy, for direct air capture and storage",17300: Steam and hot water,heat production
-"market for energy, for enhanced rock weathering","energy, for enhanced rock weathering",17300: Steam and hot water,heat production
+"biodiesel, burned in heavy-duty vehicle",heat,17300: Steam and hot water,road transport
+"biodiesel, burned in passenger car",heat,17300: Steam and hot water,road transport
+"biodiesel, burned in passenger train",heat,17300: Steam and hot water,rail transport
+"biodiesel, burned in single deck coach or urban bus",heat,17300: Steam and hot water,road transport
 "diesel, burned in diesel-electric generating set","diesel, burned in diesel-electric generating set",17300: Steam and hot water,heat production
 "diesel, burned in diesel-electric generating set, at extraction site","diesel, burned in diesel-electric generating set, at extraction site",17300: Steam and hot water,heat production
 diesel-electric generating set production 10MW,diesel-electric generating set production 10MW,17300: Steam and hot water,heat production
@@ -13540,54 +13642,68 @@ refining of vegetable oil from oil palm,refining of vegetable oil from oil palm,
 "treatment of sulfidic tailings, generic, backfilling","sulfidic tailings, generic",39990: Other wastes n.e.c.,tailings
 "treatment of sulfidic tailings, flocculation-flotation process","sulfidic tailings, generic",39990: Other wastes n.e.c.,tailings
 "treatment of sulfidic tailings, roasting and leaching","sulfidic tailings, generic",39990: Other wastes n.e.c.,tailings
-"treatment of used LFP battery cell, hydrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
-"treatment of used LFP battery cell, pyrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
-"treatment of used LFP battery cell, hydrometallurgical treatment",used LFP battery cell,39990: Other wastes n.e.c.,other waste
-"treatment of used LFP battery cell, pyrometallurgical treatment",used LFP battery cell,39990: Other wastes n.e.c.,other waste
-treatment of used Li-ion battery with hydrometallurgical treatment,used Li-ion battery,39990: Other wastes n.e.c.,other waste
-treatment of used Li-ion battery with pyrometallurgical treatment,used Li-ion battery,39990: Other wastes n.e.c.,other waste
-"treatment of used SIB battery cell, hydrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
-"treatment of used SIB battery cell, pyrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
-"treatment of used SIB battery cell, hydrometallurgical treatment",used SIB battery cell,39990: Other wastes n.e.c.,other waste
-"treatment of used SIB battery cell, pyrometallurgical treatment",used SIB battery cell,39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, 1MWe, PEM","used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, PFSA membrane recovery, 1MWe, PEM, solvent dissolution","waste PFSA membrane from used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, PGM, 1MWe, PEM, hydrometallurgy","waste PGM from used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, 1MWe, AEC","used electrolyzer stack, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, 1MWe, AEC, platinum recovery, hydrometallurgy","waste platinum from used electrolyzer stack, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
-"treatment of used electrolyzer Stack, 1MWe, SOEC","used electrolyzer stack, 1MWe, SOEC",39990: Other wastes n.e.c.,other waste
-"treatment of used solide oxide cell, cathode recovery, nitric acid route",waste LSC cathode from used solide oxide cell,39990: Other wastes n.e.c.,other waste
-"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",waste electrode from used solid oxide cell,39990: Other wastes n.e.c.,other waste
-"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy",polymer electrolyte membrane (Nafion),39990: Other wastes n.e.c.,other waste
-"treatment of used fuel cell balance of plant, 1kWe, PEM","iron scrap, sorted, pressed","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
-"treatment of used fuel cell stack, 1kWe, PEM","iron scrap, sorted, pressed","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
-"treatment of used fuel cell balance of plant, 1kWe, PEM","used fuel cell balance of plant, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used fuel cell stack, 1kWe, PEM","used fuel cell stack, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy","waste platinum from used fuel cell stack, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
-"treatment of used fuel cell stack, 125kW, SOFC","used fuel cell stack, 125kWe, SOFC",39990: Other wastes n.e.c.,other waste
-"treatment of used CIGS PV module, double green process","glass cullets, recovered from CIGS PV module treatment",39990: Other wastes n.e.c.,other waste
-"treatment of used CIGS PV module, double green process",used thin-film PV module,39990: Other wastes n.e.c.,other waste
-"treatment of used perovskite module, delamination, pyrolysis, chemical treatment",lead,39364: Waste and scrap of lead,other metal waste
-"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","silicon, metallurgical grade",39990: Other wastes n.e.c.,other waste
-"treatment of used perovskite, delamination, pyrolysis, chemical treatment",used perovskite module,39990: Other wastes n.e.c.,other waste
-"treatment of used perovskite module, delamination",delaminated used perovskite module,39990: Other wastes n.e.c.,other waste
-"treatment of used perovskite module, pyrolysis",pyrolysed used perovskite module,39990: Other wastes n.e.c.,other waste
-"treatment of SHJ cells in used perovskite module, chemical treatment",chemical treated SHJ cells in used perovskite module,39990: Other wastes n.e.c.,other waste
-"treatment of perovskite section in used perovskite module, chemical treatment",chemical treated perovskite section in used perovskite module,39990: Other wastes n.e.c.,other waste
-"treatment of used perovskite module, glass treatment",second treated used perovskite module,39990: Other wastes n.e.c.,other waste
-treatment of glass from used perovskite module,glass from used perovskite module,39990: Other wastes n.e.c.,other waste
-treatment of waste from perovskite module treatment,waste from perovskite module treatment,39990: Other wastes n.e.c.,other waste
-"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",used permanent magnet,39990: Other wastes n.e.c.,other waste
-collection of used permanent magnet,collected used permanent magnet,39990: Other wastes n.e.c.,other waste
 "clinker production, dry feed rotary kiln, efficient, with MEA CCS",clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 clinker production,clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
+"treatment of sulfidic tailings, from copper mine operation, tailings impoundment","sulfidic tailings, from copper mine operation",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, from nickel mine operation, tailings impoundment","sulfidic tailings, from nickel mine operation",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, from gold mine operation, tailings impoundment","sulfidic tailings, from gold mine operation",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, from cinnabar mine operation, tailings impoundment","sulfidic tailings, from cinnabar mine operation",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, from zinc-lead mine operation, tailings impoundment","sulfidic tailings, from zinc-lead mine operation",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, generic, tailings impoundment","sulfidic tailings, generic",39990: Other wastes n.e.c.,tailings
+"treatment of sulfidic tailings, from silver mine operation, tailings impoundment","sulfidic tailings, from silver mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from copper mine operation","sulfidic tailings, from copper mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from zinc-lead mine operation","sulfidic tailings, from zinc-lead mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from silver mine operation","sulfidic tailings, from silver mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from gold mine operation","sulfidic tailings, from gold mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from cinnabar mine operation","sulfidic tailings, from cinnabar mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, from nickel mine operation","sulfidic tailings, from nickel mine operation",39990: Other wastes n.e.c.,tailings
+"market for sulfidic tailings, generic","sulfidic tailings, generic",39990: Other wastes n.e.c.,tailings
 "clinker production, average",clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 "clinker production, dry feed rotary kiln, efficient",clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 "clinker production, dry feed rotary kiln, efficient, with on-site CCS",clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 "clinker production, dry feed rotary kiln, efficient, with oxyfuel CCS",clinker,"39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
+collection of used permanent magnet,collected used permanent magnet,39990: Other wastes n.e.c.,other waste
+"treatment of SHJ cells in used perovskite module, chemical treatment",chemical treated SHJ cells in used perovskite module,39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell balance of plant, 1MWe, AEC","used fuel cell balance of plant, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell balance of plant, 1MWe, PEM","used fuel cell balance of plant, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell balance of plant, 1MWe, SOEC","used fuel cell balance of plant, 1MWe, SOEC",39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell stack, 1MWe, AEC","used fuel cell stack, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell stack, 1MWe, PEM","used fuel cell stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
 "treatment of fuel cell stack, 1MWe, SOEC","used fuel cell stack, 1MWe, SOEC",39990: Other wastes n.e.c.,other waste
+treatment of glass from used perovskite module,glass from used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of perovskite section in used perovskite module, chemical treatment",chemical treated perovskite section in used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of used CIGS PV module, double green process","glass cullets, recovered from CIGS PV module treatment",39990: Other wastes n.e.c.,other waste
+"treatment of used CIGS PV module, double green process",used thin-film PV module,39990: Other wastes n.e.c.,other waste
+"treatment of used LFP battery cell, hydrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
+"treatment of used LFP battery cell, hydrometallurgical treatment",used LFP battery cell,39990: Other wastes n.e.c.,other waste
+"treatment of used LFP battery cell, pyrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
+"treatment of used LFP battery cell, pyrometallurgical treatment",used LFP battery cell,39990: Other wastes n.e.c.,other waste
+treatment of used Li-ion battery with hydrometallurgical treatment,used Li-ion battery,39990: Other wastes n.e.c.,other waste
+treatment of used Li-ion battery with pyrometallurgical treatment,used Li-ion battery,39990: Other wastes n.e.c.,other waste
+"treatment of used SIB battery cell, hydrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
+"treatment of used SIB battery cell, hydrometallurgical treatment",used SIB battery cell,39990: Other wastes n.e.c.,other waste
+"treatment of used SIB battery cell, pyrometallurgical treatment","non-Fe-Co-metals, from Li-ion battery, hydrometallurgical processing",39990: Other wastes n.e.c.,other waste
+"treatment of used SIB battery cell, pyrometallurgical treatment",used SIB battery cell,39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, 1MWe, AEC","used electrolyzer stack, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, 1MWe, AEC, platinum recovery, hydrometallurgy","waste platinum from used electrolyzer stack, 1MWe, AEC",39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, 1MWe, PEM","used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, 1MWe, SOEC","used electrolyzer stack, 1MWe, SOEC",39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, PFSA membrane recovery, 1MWe, PEM, solvent dissolution","waste PFSA membrane from used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used electrolyzer Stack, PGM, 1MWe, PEM, hydrometallurgy","waste PGM from used electrolyzer stack, 1MWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used fuel cell balance of plant, 1kWe, PEM","iron scrap, sorted, pressed","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
+"treatment of used fuel cell balance of plant, 1kWe, PEM","used fuel cell balance of plant, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used fuel cell stack, 125kW, SOFC","used fuel cell stack, 125kWe, SOFC",39990: Other wastes n.e.c.,other waste
+"treatment of used fuel cell stack, 1kWe, PEM","iron scrap, sorted, pressed","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
+"treatment of used fuel cell stack, 1kWe, PEM","used fuel cell stack, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy",polymer electrolyte membrane (Nafion),39990: Other wastes n.e.c.,other waste
+"treatment of used fuel cell stack, 1kWe, PEM, platinum recovery, hydrometallurgy","waste platinum from used fuel cell stack, 1kWe, PEM",39990: Other wastes n.e.c.,other waste
+"treatment of used permanent magnet, collection, decoating, hydrogen decrepitation, milling",used permanent magnet,39990: Other wastes n.e.c.,other waste
+"treatment of used perovskite module, delamination",delaminated used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of used perovskite module, delamination, pyrolysis, chemical treatment",lead,39364: Waste and scrap of lead,other metal waste
+"treatment of used perovskite module, delamination, pyrolysis, chemical treatment","silicon, metallurgical grade",39990: Other wastes n.e.c.,other waste
+"treatment of used perovskite module, glass treatment",second treated used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of used perovskite module, pyrolysis",pyrolysed used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of used perovskite, delamination, pyrolysis, chemical treatment",used perovskite module,39990: Other wastes n.e.c.,other waste
+"treatment of used solide oxide cell, anode recovery,  hydrothermal treatment",waste electrode from used solid oxide cell,39990: Other wastes n.e.c.,other waste
+"treatment of used solide oxide cell, cathode recovery, nitric acid route",waste LSC cathode from used solide oxide cell,39990: Other wastes n.e.c.,other waste
+treatment of waste from perovskite module treatment,waste from perovskite module treatment,39990: Other wastes n.e.c.,other waste
