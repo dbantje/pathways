@@ -1062,7 +1062,6 @@ def _calculate_year(args: tuple):
                 methods=methods,
                 biosphere_matrix_dict=lca.dicts.biosphere,
                 biosphere_dict=biosphere_indices,
-                ei_version=ei_version,
                 debug=debug,
                 ei_version=ei_version,
             )

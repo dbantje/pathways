@@ -94,8 +94,6 @@ def fill_characterization_factors_matrices(
     :type biosphere_matrix_dict: dict[int, int]
     :param biosphere_dict: Mapping of flow descriptors to biosphere indices.
     :type biosphere_dict: dict[tuple[str, str, str], int]
-    :param ei_version: Ecoinvent release identifier to read.
-    :type ei_version: str
     :param debug: Flag to emit detailed logging about matched factors.
     :type debug: bool
     :param ei_version: Ecoinvent release identifier to read.
