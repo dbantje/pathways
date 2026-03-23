@@ -42,6 +42,7 @@ from .utils import (
     read_categories_from_yaml,
     get_combined_filters,
     apply_filters,
+    change_compartments_PM,
 )
 from .stats import log_double_accounting, log_double_accounting_flows
 
@@ -100,6 +101,7 @@ def get_lca_matrices(
     variables: List[str] = None,
     geo: Geomap = None,
     remove_uncertainty: bool = False,
+    change_pm_compartments: bool = False,
 ) -> tuple[
     Datapackage,
     dict[tuple[str, str, str, str], int],
@@ -159,6 +161,9 @@ def get_lca_matrices(
         raise ValueError(
             f"Expected 4 filepaths, got {len(fps)} when looking at {filepaths} for terms: {model}, {scenario}, {year}"
         )
+    
+    if change_pm_compartments:
+        change_compartments_PM(fps)
 
     fp_technosphere_inds = select_filepath("A_matrix_index", fps)
     fp_biosphere_inds = select_filepath("B_matrix_index", fps)
@@ -780,6 +785,7 @@ def _calculate_year(args: tuple):
         shares,
         uncertain_parameters,
         remove_uncertainty,
+        change_pm_compartments,
         seed,
         double_accounting,
         ei_version,
@@ -822,6 +828,7 @@ def _calculate_year(args: tuple):
             variables=variables,
             geo=geo,
             remove_uncertainty=remove_uncertainty,
+            change_pm_compartments=change_pm_compartments,
         )
 
     except FileNotFoundError:

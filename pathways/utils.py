@@ -28,6 +28,9 @@ from .filesystem_constants import DATA_DIR, DIR_CACHED_DB
 
 CLASSIFICATIONS = DATA_DIR / "classifications_interventionpaper.csv"
 UNITS_CONVERSION = DATA_DIR / "units_conversion.yaml"
+COMPARTMENTS_CHANGE = DATA_DIR / "PM_compartments_change_v8p10.csv"
+
+
 
 logger = logging.getLogger(__name__)
 
@@ -614,6 +617,68 @@ def add_lhv(variable, mapping) -> Union[dict, None]:
             if "lhv" in ds:
                 return ds["lhv"]
     return {}
+
+def change_compartments_PM(filepaths) -> None:
+    """Change compartments in biosphere matrices specified by COMPARTMENTS_CHANGE.
+
+    :returns: ``None``
+    :rtype: None
+    """
+    changes = pd.read_csv(COMPARTMENTS_CHANGE).dropna(subset="new compartment")
+
+    # select filepaths
+    def select_filepath(keyword: str, fps):
+        matches = [fp for fp in fps if keyword in fp.name]
+        if not matches:
+            raise FileNotFoundError(f"Expected file containing '{keyword}' not found.")
+        return matches[0]
+
+    # load indices and biosphere matrix    
+    Aidx = pd.read_csv(select_filepath(("A_matrix_index"), filepaths), sep=";")
+    Bidx = pd.read_csv(select_filepath(("B_matrix_index"), filepaths), sep=";").set_index(
+        ["name", "compartment", "subcompartment"]
+    )["index"]
+    fp_biosphere = select_filepath("B_matrix", [fp for fp in filepaths if "index" not in fp.name])
+    Bdata = pd.read_csv(fp_biosphere, sep=";")
+
+    # get needed biosphere indices
+    pm_pollutants = [
+        'Ammonia', 'Nitrogen oxides',
+        'Particulate Matter, > 2.5 um and < 10um',
+        'Particulate Matter, < 2.5 um',
+        'Sulfur dioxide', 'Nitrate',
+    ]
+
+    # change compartments
+    # one pollutant and dataset name at a time
+    for pollutant in pm_pollutants:
+        Bidx_all = Bidx.loc[pollutant, "air", :]
+        for idx, row in changes.iterrows():
+            act_idx = Aidx[Aidx["name"] == row["dataset name"]]["index"]
+            b_idx_new = Bidx.loc[pollutant, "air", row["new compartment"]]
+            Amask = Bdata["index of activity"].isin(act_idx)
+            Bmask = Bdata["index of biosphere flow"].isin(Bidx_all)
+            mask = Amask & Bmask
+            Bdata.loc[mask, "index of biosphere flow"] = b_idx_new
+
+    # remove redundancy in matrix
+    aggfuncs = {
+        'value': 'sum',
+        'uncertainty type': 'first',
+        'loc': 'sum',
+        'scale': 'first',
+        'shape': 'first',
+        'minimum': 'first',
+        'maximum': 'first',
+        'negative': 'first',
+        'flip': 'first'
+    }
+    Bdata_new = Bdata.groupby(["index of activity", "index of biosphere flow"]).agg(
+        aggfuncs
+    ).reset_index()
+
+    # save new matrix
+    Bdata_new.to_csv(fp_biosphere, sep=";", index=False)
 
 
 def fetch_indices(

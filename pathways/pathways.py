@@ -463,6 +463,7 @@ class Pathways:
         use_distributions: int = 0,
         subshares: bool = False,
         remove_uncertainty: bool = False,
+        change_pm_compartments: bool = False,
         seed: int = 0,
         multiprocessing: bool = True,
         double_accounting: Optional[List[str]] = None,
@@ -571,6 +572,7 @@ class Pathways:
                 model=models[0],
                 scenario=scenarios[0],
                 year=years[0],
+                change_pm_compartments=change_pm_compartments,
             )
         except Exception as e:
             logging.error(f"Error retrieving LCA matrices: {str(e)}")
@@ -636,6 +638,7 @@ class Pathways:
                         shares,
                         uncertain_parameters,
                         remove_uncertainty,
+                        change_pm_compartments,
                         seed,
                         double_accounting,
                         self.ei_version,
