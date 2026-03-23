@@ -161,7 +161,7 @@ def get_lca_matrices(
         raise ValueError(
             f"Expected 4 filepaths, got {len(fps)} when looking at {filepaths} for terms: {model}, {scenario}, {year}"
         )
-    
+
     if change_pm_compartments:
         change_compartments_PM(fps)
 

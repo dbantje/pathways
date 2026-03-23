@@ -31,7 +31,6 @@ UNITS_CONVERSION = DATA_DIR / "units_conversion.yaml"
 COMPARTMENTS_CHANGE = DATA_DIR / "PM_compartments_change_v8p10.csv"
 
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -618,6 +617,7 @@ def add_lhv(variable, mapping) -> Union[dict, None]:
                 return ds["lhv"]
     return {}
 
+
 def change_compartments_PM(filepaths) -> None:
     """Change compartments in biosphere matrices specified by COMPARTMENTS_CHANGE.
 
@@ -633,20 +633,24 @@ def change_compartments_PM(filepaths) -> None:
             raise FileNotFoundError(f"Expected file containing '{keyword}' not found.")
         return matches[0]
 
-    # load indices and biosphere matrix    
+    # load indices and biosphere matrix
     Aidx = pd.read_csv(select_filepath(("A_matrix_index"), filepaths), sep=";")
-    Bidx = pd.read_csv(select_filepath(("B_matrix_index"), filepaths), sep=";").set_index(
-        ["name", "compartment", "subcompartment"]
-    )["index"]
-    fp_biosphere = select_filepath("B_matrix", [fp for fp in filepaths if "index" not in fp.name])
+    Bidx = pd.read_csv(
+        select_filepath(("B_matrix_index"), filepaths), sep=";"
+    ).set_index(["name", "compartment", "subcompartment"])["index"]
+    fp_biosphere = select_filepath(
+        "B_matrix", [fp for fp in filepaths if "index" not in fp.name]
+    )
     Bdata = pd.read_csv(fp_biosphere, sep=";")
 
     # get needed biosphere indices
     pm_pollutants = [
-        'Ammonia', 'Nitrogen oxides',
-        'Particulate Matter, > 2.5 um and < 10um',
-        'Particulate Matter, < 2.5 um',
-        'Sulfur dioxide', 'Nitrate',
+        "Ammonia",
+        "Nitrogen oxides",
+        "Particulate Matter, > 2.5 um and < 10um",
+        "Particulate Matter, < 2.5 um",
+        "Sulfur dioxide",
+        "Nitrate",
     ]
 
     # change compartments
@@ -663,19 +667,21 @@ def change_compartments_PM(filepaths) -> None:
 
     # remove redundancy in matrix
     aggfuncs = {
-        'value': 'sum',
-        'uncertainty type': 'first',
-        'loc': 'sum',
-        'scale': 'first',
-        'shape': 'first',
-        'minimum': 'first',
-        'maximum': 'first',
-        'negative': 'first',
-        'flip': 'first'
+        "value": "sum",
+        "uncertainty type": "first",
+        "loc": "sum",
+        "scale": "first",
+        "shape": "first",
+        "minimum": "first",
+        "maximum": "first",
+        "negative": "first",
+        "flip": "first",
     }
-    Bdata_new = Bdata.groupby(["index of activity", "index of biosphere flow"]).agg(
-        aggfuncs
-    ).reset_index()
+    Bdata_new = (
+        Bdata.groupby(["index of activity", "index of biosphere flow"])
+        .agg(aggfuncs)
+        .reset_index()
+    )
 
     # save new matrix
     Bdata_new.to_csv(fp_biosphere, sep=";", index=False)
