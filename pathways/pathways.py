@@ -200,7 +200,7 @@ class Pathways:
         if stationary_battery_scen == "TC":
             for k, v in self.mapping.items():
                 if "VRE battery storage" in k:
-                    new_datasets = [] 
+                    new_datasets = []
                     for ds in v["dataset"]:
                         new_name = ds["name"].replace("CONT scenario", "TC scenario")
                         ds["name"] = new_name
