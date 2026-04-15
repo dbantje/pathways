@@ -166,6 +166,7 @@ class Pathways:
         ecoinvent_version: str = "3.11",
         classification_system: str = "CPC",
         classify_by_name: list = [],
+        stationary_battery_scen: str = "CONT",
         debug=True,
         clean_cache=True,
     ):
@@ -189,6 +190,22 @@ class Pathways:
         )
         self.mapping = _get_mapping(self.data)
         self.ei_version = ecoinvent_version
+
+        allowed_battery_scens = ["CONT", "TC"]
+        if stationary_battery_scen not in allowed_battery_scens:
+            raise ValueError(
+                f"Invalid stationary_battery_scen: {stationary_battery_scen}. "
+                f"Allowed values are: {allowed_battery_scens}"
+            )
+        if stationary_battery_scen == "TC":
+            for k, v in self.mapping.items():
+                if "VRE battery storage" in k:
+                    new_datasets = [] 
+                    for ds in v["dataset"]:
+                        new_name = ds["name"].replace("CONT scenario", "TC scenario")
+                        ds["name"] = new_name
+                        new_datasets.append(ds)
+                    self.mapping[k]["dataset"] = new_datasets
 
         self.debug = debug
         self.scenarios = self._get_scenarios(dataframe)
