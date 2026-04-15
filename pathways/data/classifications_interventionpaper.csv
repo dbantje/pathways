@@ -10341,7 +10341,7 @@ maleic anhydride production by direct oxidation of n-butane,"heat, from steam, i
 "treatment of sewage sludge, 70% water, WWT, WW from maize starch production, municipal incineration FAE","heat, for reuse in municipal waste incineration only",17300: Steam and hot water,industrial heat
 "sulfate pulp production, from hardwood, bleached","heat, district or industrial, other than natural gas",17300: Steam and hot water,industrial heat
 "treatment of waste newspaper, municipal incineration","heat, for reuse in municipal waste incineration only",17300: Steam and hot water,industrial heat
-"heat production, mixed logs, at wood heater 6kW","heat, central or small-scale, other than natural gas",17300: Steam and hot water,industrial heat
+"heat production, mixed logs, at wood heater 6kW","heat, central or small-scale, other than natural gas",17300: Steam and hot water,buildings heat
 "heat production, lignite briquette, at stove 5-15kW","heat, central or small-scale, other than natural gas",17300: Steam and hot water,buildings heat
 "treatment of refinery sludge, hazardous waste incineration, with energy recovery","heat, district or industrial, other than natural gas",17300: Steam and hot water,industrial heat
 "heat production, softwood chips from forest, at furnace 1000kW","heat, district or industrial, other than natural gas",17300: Steam and hot water,industrial heat
@@ -10447,7 +10447,7 @@ coke production,"steam, in chemical industry",17300: Steam and hot water,industr
 "treatment of waste polyurethane, sanitary landfill","heat, district or industrial, other than natural gas",17300: Steam and hot water,industrial heat
 "treatment of waste plastic, mixture, municipal incineration FAE","heat, for reuse in municipal waste incineration only",17300: Steam and hot water,industrial heat
 "heat production, hardwood chips from forest, at furnace 50kW","heat, central or small-scale, other than natural gas",17300: Steam and hot water,buildings heat
-"heat production, mixed logs, at wood heater 6kW, state-of-the-art 2014","heat, central or small-scale, other than natural gas",17300: Steam and hot water,industrial heat
+"heat production, mixed logs, at wood heater 6kW, state-of-the-art 2014","heat, central or small-scale, other than natural gas",17300: Steam and hot water,buildings heat
 "heat and power co-generation, natural gas, mini-plant 2KW electrical","heat, central or small-scale, natural gas",17300: Steam and hot water,industrial heat
 "treatment of waste aluminium, sanitary landfill","heat, district or industrial, other than natural gas",17300: Steam and hot water,industrial heat
 "treatment of waste emulsion paint, municipal incineration","heat, for reuse in municipal waste incineration only",17300: Steam and hot water,industrial heat
