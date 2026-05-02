@@ -106,7 +106,9 @@ def _fill_in_result_array(
         if use_distributions == 0:
             array = array.transpose(2, 0, 3, 1)
         elif full_distributions:
-            array = array.sum(axis=(2, 3)) # sum over act_category and location dimensions
+            array = array.sum(
+                axis=(2, 3)
+            )  # sum over act_category and location dimensions
         else:
             array = np.quantile(
                 array, [0.05, 0.5, 0.95], method="closest_observation", axis=-1
@@ -145,9 +147,13 @@ def _fill_in_result_array(
         )
 
     if full_distributions:
-        return np.stack(results, axis=1)  # shape (variable, regions, impact_category, sample index)
+        return np.stack(
+            results, axis=1
+        )  # shape (variable, regions, impact_category, sample index)
     else:
-        return np.stack(results, axis=2) # shape (act_category, variable, regions, location, impact_category, [quantiles])
+        return np.stack(
+            results, axis=2
+        )  # shape (act_category, variable, regions, location, impact_category, [quantiles])
 
 
 class Pathways:

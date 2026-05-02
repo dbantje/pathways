@@ -319,7 +319,9 @@ def create_lca_results_array(
 
     if use_distributions > 0:
         if full_distributions:
-            array_coords = {k: v for k, v in coords.items() if k not in ["act_category", "location"]}
+            array_coords = {
+                k: v for k, v in coords.items() if k not in ["act_category", "location"]
+            }
             coords.update({"sample index": list(range(use_distributions))})
         else:
             coords.update({"quantile": [0.05, 0.5, 0.95]})

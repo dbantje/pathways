@@ -955,8 +955,7 @@ def _calculate_year(args: tuple):
 
     # reorder keys of acts_category_idx_dict based on lca_coords["act_category"]
     acts_category_idx_dict = {
-        k: acts_category_idx_dict[k]
-        for k in lca_coords["act_category"]
+        k: acts_category_idx_dict[k] for k in lca_coords["act_category"]
     }
 
     acts_location_idx_dict = _group_technosphere_indices(
@@ -968,8 +967,7 @@ def _calculate_year(args: tuple):
 
     # reorder keys of acts_location_idx_dict based on lca_coords["location"]
     acts_location_idx_dict = {
-        k: acts_location_idx_dict[k]
-        for k in lca_coords["location"]
+        k: acts_location_idx_dict[k] for k in lca_coords["location"]
     }
 
     bar = pyprind.ProgBar(len(regions))
