@@ -233,7 +233,7 @@ def load_units_conversion() -> dict:
     return data
 
 
-def create_lca_results_array(
+def get_lca_coords(
     methods: List[str],
     years: List[int],
     regions: List[str],
@@ -242,9 +242,8 @@ def create_lca_results_array(
     scenarios: List[str],
     classifications: dict,
     mapping: dict,
-    use_distributions: bool = False,
-) -> xr.DataArray:
-    """Create an empty ``xarray.DataArray`` with coordinates for storing LCA results.
+) -> dict:
+    """Get a dictionary of coordinates for the LCA results array.
 
     :param methods: LCIA method names.
     :type methods: list[str]
@@ -262,10 +261,8 @@ def create_lca_results_array(
     :type classifications: dict
     :param mapping: Scenario variable mapping used to populate the ``variable`` coordinate.
     :type mapping: dict
-    :param use_distributions: Whether to append a ``quantile`` dimension for Monte Carlo statistics.
-    :type use_distributions: bool
-    :returns: Zero-initialized results array with all coordinates defined.
-    :rtype: xarray.DataArray
+    :returns: Dictionary will all coordinate definitions.
+    :rtype: dict
     :raises ValueError: If any required coordinate list is empty.
     """
 
@@ -300,23 +297,34 @@ def create_lca_results_array(
         "impact_category": methods,
     }
 
-    if use_distributions is True:
-        # we calculate the 5th, 50th, and 95th percentiles
-        coords.update({"quantile": [0.05, 0.5, 0.95]})
+    return coords
 
-    dims = (
-        len(coords["act_category"]),
-        len(coords["variable"]),
-        len(years),
-        len(regions),
-        len(locations),
-        len(models),
-        len(scenarios),
-        len(methods),
-    )
 
-    if use_distributions is True:
-        dims += (3,)
+def create_lca_results_array(
+    coords: dict,
+    use_distributions: int,
+    full_distributions: bool = False,
+) -> xr.DataArray:
+    """Create an empty ``xarray.DataArray`` with coordinates for storing LCA results.
+
+    :param coords: Dictionary of coordinate definitions for the results array.
+    :type coords: dict
+    :param use_distributions: Number of MC runs.
+    :type use_distributions: int
+    :param full_distributions: Whether to keep the full distribution of Monte Carlo results instead of quantiles.
+    :type full_distributions: bool
+    :returns: Zero-initialized results array with all coordinates defined.
+    :rtype: xarray.DataArray
+    """
+
+    if use_distributions > 0:
+        if full_distributions:
+            array_coords = {k: v for k, v in coords.items() if k not in ["act_category", "location"]}
+            coords.update({"sample index": list(range(use_distributions))})
+        else:
+            coords.update({"quantile": [0.05, 0.5, 0.95]})
+
+    dims = tuple(len(coords[d]) for d in coords.keys())
 
     # Create the xarray DataArray with the defined coordinates and dimensions.
     # The array is initialized with zeros.

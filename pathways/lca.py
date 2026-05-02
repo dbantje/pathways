@@ -775,7 +775,7 @@ def _calculate_year(args: tuple):
         filepaths,
         mapping,
         units,
-        lca_results,
+        lca_coords,
         classifications,
         scenarios,
         reverse_classifications,
@@ -950,13 +950,13 @@ def _calculate_year(args: tuple):
     acts_category_idx_dict = _group_technosphere_indices(
         technosphere_indices=technosphere_indices,
         group_by=lambda x: classifications.get(x[:2], "undefined"),
-        group_values=lca_results.coords["act_category"].values.tolist(),
+        group_values=lca_coords["act_category"],
     )
 
-    # reorder keys of acts_category_idx_dict based on lca_results.coords["act_category"].values
+    # reorder keys of acts_category_idx_dict based on lca_coords["act_category"]
     acts_category_idx_dict = {
         k: acts_category_idx_dict[k]
-        for k in lca_results.coords["act_category"].values.tolist()
+        for k in lca_coords["act_category"]
     }
 
     acts_location_idx_dict = _group_technosphere_indices(
@@ -966,10 +966,10 @@ def _calculate_year(args: tuple):
         mapping=geography_mapping,
     )
 
-    # reorder keys of acts_location_idx_dict based on lca_results.coords["location"].values
+    # reorder keys of acts_location_idx_dict based on lca_coords["location"]
     acts_location_idx_dict = {
         k: acts_location_idx_dict[k]
-        for k in lca_results.coords["location"].values.tolist()
+        for k in lca_coords["location"]
     }
 
     bar = pyprind.ProgBar(len(regions))

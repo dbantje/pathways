@@ -34,6 +34,7 @@ from .utils import (
     _get_mapping,
     _read_datapackage,
     clean_cache_directory,
+    get_lca_coords,
     create_lca_results_array,
     display_results,
     export_results_to_parquet,
@@ -55,6 +56,7 @@ def _fill_in_result_array(
     use_distributions: int,
     shares: [None, dict],
     methods: list,
+    full_distributions: bool,
 ) -> np.ndarray:
     """Load per-region result files and stack them into the master results tensor.
 
@@ -99,14 +101,17 @@ def _fill_in_result_array(
     for region, data_ in result.items():
 
         array = iteration_results[region]
+        # array has dimensions (variable, impact_category, act_category, location)
 
-        if use_distributions > 0:
+        if use_distributions == 0:
+            array = array.transpose(2, 0, 3, 1)
+        elif full_distributions:
+            array = array.sum(axis=(2, 3)) # sum over act_category and location dimensions
+        else:
             array = np.quantile(
                 array, [0.05, 0.5, 0.95], method="closest_observation", axis=-1
             )
             array = array.transpose(3, 1, 4, 2, 0)
-        else:
-            array = array.transpose(2, 0, 3, 1)
 
         results.append(array)
 
@@ -139,7 +144,10 @@ def _fill_in_result_array(
             shares=shares,
         )
 
-    return np.stack(results, axis=2)
+    if full_distributions:
+        return np.stack(results, axis=1)  # shape (variable, regions, impact_category, sample index)
+    else:
+        return np.stack(results, axis=2) # shape (act_category, variable, regions, location, impact_category, [quantiles])
 
 
 class Pathways:
@@ -167,6 +175,7 @@ class Pathways:
         classification_system: str = "CPC",
         classify_by_name: list = [],
         stationary_battery_scen: str = "CONT",
+        mobile_battery_scen: str = "MIX",
         debug=True,
         clean_cache=True,
     ):
@@ -220,6 +229,7 @@ class Pathways:
             self._apply_activities_mapping(activities_mapping)
 
         self.lca_results = None
+        self.lca_coords = None
         self.lcia_methods = get_lcia_method_names(self.ei_version)
         self.units = load_units_conversion()
         self.lcia_matrix = None
@@ -478,6 +488,7 @@ class Pathways:
         variables: Optional[List[str]] = None,
         demand_cutoff: float = 1e-3,
         use_distributions: int = 0,
+        full_distributions: bool = False,
         subshares: bool = False,
         remove_uncertainty: bool = False,
         change_pm_compartments: bool = False,
@@ -596,7 +607,7 @@ class Pathways:
             return
 
         # Create xarray for storing LCA results if not already present
-        if self.lca_results is None:
+        if self.lca_coords is None:
             locations = fetch_inventories_locations(technosphere_index)
 
             # if geography mapping is provided, aggregate locations
@@ -605,7 +616,7 @@ class Pathways:
             else:
                 self.geography_mapping = {loc: loc for loc in locations}
 
-            self.lca_results = create_lca_results_array(
+            self.lca_coords = get_lca_coords(
                 methods=methods or [str(m) for m in edges_methods],
                 years=years,
                 regions=regions,
@@ -614,7 +625,6 @@ class Pathways:
                 scenarios=scenarios,
                 classifications=self.classifications,
                 mapping=self.mapping,
-                use_distributions=use_distributions > 0,
             )
 
         # generate share of sub-technologies
@@ -645,7 +655,7 @@ class Pathways:
                         self.filepaths,
                         self.mapping,
                         self.units,
-                        self.lca_results,
+                        self.lca_coords,
                         self.classifications,
                         self.scenarios,
                         self.reverse_classifications,
@@ -679,6 +689,13 @@ class Pathways:
                     for arg in args:
                         results[(arg[0], arg[1], arg[2])] = _calculate_year(arg)
 
+        # create an xarray DataArray to hold the results
+        self.lca_results = create_lca_results_array(
+            self.lca_coords,
+            use_distributions,
+            full_distributions=full_distributions,
+        )
+
         # remove None values in results
         results = {k: v for k, v in results.items() if v is not None}
 
@@ -691,6 +708,7 @@ class Pathways:
                         use_distributions,
                         shares,
                         methods,
+                        full_distributions,
                     )
                     for coords, result in results.items()
                 ]
@@ -726,6 +744,7 @@ class Pathways:
                     use_distributions,
                     shares,
                     methods,
+                    full_distributions,
                 )
 
     def aggregate_results(self, cutoff: float = 0.001, interpolate: bool = False):
