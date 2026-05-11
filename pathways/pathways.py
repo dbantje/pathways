@@ -789,7 +789,7 @@ class Pathways:
         :rtype: str
         """
         return export_results_to_parquet(self.lca_results, filename)
-    
+
     def empty_and_remove_cache(self):
         """Empty the cache directory and remove it."""
         for f in self.cache_dir.glob("*"):

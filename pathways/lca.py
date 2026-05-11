@@ -576,10 +576,12 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
             M = C @ v  # (n_methods, n_cols), SciPy sparse
             slices.append(spnd.COO.from_scipy_sparse(M))
         return spnd.stack(slices, axis=0)  # (n_inv, n_methods, n_cols)
-    
+
     # helper to aggregate inventory results to (n_inv, n_methods, n_cat, n_loc) using dict_loc_cat mapping
     # or sum over all columns if full distributions are requested
-    def _aggregate_inventory_results(inventory_results, dict_loc_cat, full_distributions):
+    def _aggregate_inventory_results(
+        inventory_results, dict_loc_cat, full_distributions
+    ):
         if full_distributions:
             # Sum over all columns to get (n_inv, n_methods)
             return inventory_results.sum(axis=2)
@@ -655,7 +657,7 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
             logging.info(f"iter_results shape: {iter_results.shape}")
 
         # Save without densifying
-        iter_results_filepath = cache_dir/ f"iter_results_{uuid.uuid4()}.npz"
+        iter_results_filepath = cache_dir / f"iter_results_{uuid.uuid4()}.npz"
         spnd.save_npz(
             filename=iter_results_filepath, matrix=iter_results, compressed=True
         )
@@ -697,9 +699,7 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
                 )
 
                 # Save per-iteration sparse tensor
-                iter_results_filepath = (
-                    cache_dir/ f"iter_results_{uuid.uuid4()}.npz"
-                )
+                iter_results_filepath = cache_dir / f"iter_results_{uuid.uuid4()}.npz"
                 spnd.save_npz(
                     filename=iter_results_filepath, matrix=iter_results, compressed=True
                 )
@@ -714,17 +714,15 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
                 )
 
         # Save MC parameter draws
-        iter_param_vals_filepath = cache_dir/ f"iter_param_vals_{uuid.uuid4()}.npy"
+        iter_param_vals_filepath = cache_dir / f"iter_param_vals_{uuid.uuid4()}.npy"
         np.save(file=iter_param_vals_filepath, arr=np.stack(iter_param_vals, axis=-1))
 
         # Save indices
-        id_uncertainty_indices_filepath = (
-            cache_dir/ f"mc_indices_{uuid.uuid4()}.npy"
-        )
+        id_uncertainty_indices_filepath = cache_dir / f"mc_indices_{uuid.uuid4()}.npy"
         np.save(file=id_uncertainty_indices_filepath, arr=lca.uncertain_parameters)
 
         id_technosphere_indices_filepath = (
-            cache_dir/ f"tech_indices_{uuid.uuid4()}.pkl"
+            cache_dir / f"tech_indices_{uuid.uuid4()}.pkl"
         )
         pickle.dump(
             lca.technosphere_indices, open(id_technosphere_indices_filepath, "wb")
@@ -1052,9 +1050,7 @@ def _calculate_year(args: tuple):
 
         uncertain_indices = np.unique(uncertain_parameters)
         lca.technosphere_indices = {
-            k: v
-            for k, v in lca.technosphere_indices.items()
-            if v in uncertain_indices
+            k: v for k, v in lca.technosphere_indices.items() if v in uncertain_indices
         }
 
         if methods:
