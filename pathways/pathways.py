@@ -15,6 +15,7 @@ from collections import defaultdict
 from multiprocessing import Pool, cpu_count
 from pathlib import Path
 from typing import List, Optional
+import uuid
 
 import numpy as np
 import pandas as pd
@@ -25,7 +26,7 @@ import yaml
 from edges import get_available_methods
 
 from .data_validation import validate_datapackage
-from .filesystem_constants import DATA_DIR, USER_LOGS_DIR
+from .filesystem_constants import DATA_DIR, USER_LOGS_DIR, DIR_CACHED_DB
 from .lca import _calculate_year, get_lca_matrices
 from .lcia import get_lcia_method_names
 from .stats import log_mc_parameters_to_excel
@@ -57,6 +58,7 @@ def _fill_in_result_array(
     shares: [None, dict],
     methods: list,
     full_distributions: bool,
+    log_mc: bool = True,
 ) -> np.ndarray:
     """Load per-region result files and stack them into the master results tensor.
 
@@ -105,15 +107,12 @@ def _fill_in_result_array(
 
         if use_distributions == 0:
             array = array.transpose(2, 0, 3, 1)
-        elif full_distributions:
-            array = array.sum(
-                axis=(2, 3)
-            )  # sum over act_category and location dimensions
-        else:
+        elif not full_distributions:
             array = np.quantile(
                 array, [0.05, 0.5, 0.95], method="closest_observation", axis=-1
             )
             array = array.transpose(3, 1, 4, 2, 0)
+        # if full_distributions, no need to transpose
 
         results.append(array)
 
@@ -133,18 +132,19 @@ def _fill_in_result_array(
             for region, data in result.items()
         }
 
-        log_mc_parameters_to_excel(
-            model=model,
-            scenario=scenario,
-            year=year,
-            methods=methods,
-            result=result,
-            uncertainty_parameters=uncertainty_parameters,
-            uncertainty_values=uncertainty_values,
-            technosphere_indices=technosphere_indices,
-            iteration_results=iteration_results,
-            shares=shares,
-        )
+        if log_mc:
+            log_mc_parameters_to_excel(
+                model=model,
+                scenario=scenario,
+                year=year,
+                methods=methods,
+                result=result,
+                uncertainty_parameters=uncertainty_parameters,
+                uncertainty_values=uncertainty_values,
+                technosphere_indices=technosphere_indices,
+                iteration_results=iteration_results,
+                shares=shares,
+            )
 
     if full_distributions:
         return np.stack(
@@ -183,6 +183,7 @@ class Pathways:
         stationary_battery_scen: str = "CONT",
         mobile_battery_scen: str = "MIX",
         debug=True,
+        custom_cache_dir: Optional[str] = None,
         clean_cache=True,
     ):
         """Initialize the workflow and load datapackage metadata.
@@ -259,6 +260,13 @@ class Pathways:
         # clean cache directory
         if clean_cache:
             clean_cache_directory()
+
+        # create a cache folder
+        if custom_cache_dir:
+            self.cache_dir = Path(custom_cache_dir) / f"{uuid.uuid4()}"
+        else:
+            self.cache_dir = DIR_CACHED_DB / f"{uuid.uuid4()}"
+        self.cache_dir.mkdir(parents=True, exist_ok=True)
 
         if self.debug:
             logging.info("#" * 600)
@@ -501,6 +509,7 @@ class Pathways:
         seed: int = 0,
         multiprocessing: bool = True,
         double_accounting: Optional[List[str]] = None,
+        log_mc: bool = True,
     ) -> None:
         """Run LCA calculations across selected models, pathways, regions, and years.
 
@@ -659,6 +668,7 @@ class Pathways:
                         edges_methods,
                         demand_cutoff,
                         self.filepaths,
+                        self.cache_dir,
                         self.mapping,
                         self.units,
                         self.lca_coords,
@@ -668,6 +678,7 @@ class Pathways:
                         self.geography_mapping,
                         self.debug,
                         use_distributions,
+                        full_distributions,
                         shares,
                         uncertain_parameters,
                         remove_uncertainty,
@@ -715,6 +726,7 @@ class Pathways:
                         shares,
                         methods,
                         full_distributions,
+                        log_mc,
                     )
                     for coords, result in results.items()
                 ]
@@ -751,6 +763,7 @@ class Pathways:
                     shares,
                     methods,
                     full_distributions,
+                    log_mc,
                 )
 
     def aggregate_results(self, cutoff: float = 0.001, interpolate: bool = False):
@@ -776,3 +789,9 @@ class Pathways:
         :rtype: str
         """
         return export_results_to_parquet(self.lca_results, filename)
+    
+    def empty_and_remove_cache(self):
+        """Empty the cache directory and remove it."""
+        for f in self.cache_dir.glob("*"):
+            f.unlink()
+        self.cache_dir.rmdir()

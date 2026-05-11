@@ -530,7 +530,11 @@ def log_mc_parameters_to_excel(
 
         for region, data in result.items():
 
-            total_impacts = np.sum(iteration_results[region], axis=(0, 2, 3))
+            array = iteration_results[region]
+            sum_axes = [0]
+            if len(array.shape) == 5:
+                sum_axes = [0, 2, 3]
+            total_impacts = np.sum(array, axis=tuple(sum_axes))
 
             df_sum_impacts = pd.concat(
                 [

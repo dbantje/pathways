@@ -532,6 +532,8 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         debug,
         use_distributions,
         uncertain_parameters,
+        full_distributions,
+        cache_dir,
     ) = data
 
     id_uncertainty_indices_filepath = None
@@ -541,16 +543,17 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
 
     # Build category × location mapping once
     dict_loc_cat: Dict[tuple, np.ndarray] = {}
-    cat_counter = 0
-    for _, act_cat_idx in lca.acts_category_idx_dict.items():
-        loc_counter = 0
-        for _, act_loc_idx in lca.acts_location_idx_dict.items():
-            idx = np.intersect1d(act_cat_idx, act_loc_idx)
-            filtered_idx = idx[idx != -1]
-            if filtered_idx.size > 0:
-                dict_loc_cat[(cat_counter, loc_counter)] = filtered_idx
-            loc_counter += 1
-        cat_counter += 1
+    if not full_distributions:
+        cat_counter = 0
+        for _, act_cat_idx in lca.acts_category_idx_dict.items():
+            loc_counter = 0
+            for _, act_loc_idx in lca.acts_location_idx_dict.items():
+                idx = np.intersect1d(act_cat_idx, act_loc_idx)
+                filtered_idx = idx[idx != -1]
+                if filtered_idx.size > 0:
+                    dict_loc_cat[(cat_counter, loc_counter)] = filtered_idx
+                loc_counter += 1
+            cat_counter += 1
 
     # Helper to build sparse 3D tensor: (n_inv, second_dim, n_cols)
     #   - edges: second_dim = n_methods, using characterization (n_methods, n_bio, n_cols) COO
@@ -569,10 +572,41 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
     def _inventory_results_3d_regular(lca, C: sps.csr_matrix):
         invs = [mat.tocsr() for mat in lca.inventories.values()]
         slices = []
-        for v in invs:
+        for i, v in enumerate(invs):
             M = C @ v  # (n_methods, n_cols), SciPy sparse
             slices.append(spnd.COO.from_scipy_sparse(M))
         return spnd.stack(slices, axis=0)  # (n_inv, n_methods, n_cols)
+    
+    # helper to aggregate inventory results to (n_inv, n_methods, n_cat, n_loc) using dict_loc_cat mapping
+    # or sum over all columns if full distributions are requested
+    def _aggregate_inventory_results(inventory_results, dict_loc_cat, full_distributions):
+        if full_distributions:
+            # Sum over all columns to get (n_inv, n_methods)
+            return inventory_results.sum(axis=2)
+        else:
+            n_inv, second_dim, _ = inventory_results.shape
+            n_cat = len(lca.acts_category_idx_dict)
+            n_loc = len(lca.acts_location_idx_dict)
+
+            zeros_block = spnd.zeros((n_inv, second_dim), dtype=inventory_results.dtype)
+
+            cat_stacks = []
+            for cat in range(n_cat):
+                loc_blocks = []
+                for loc in range(n_loc):
+                    idx = dict_loc_cat.get((cat, loc))
+                    if idx is None or idx.size == 0:
+                        block = zeros_block  # (n_inv, n_methods)
+                    else:
+                        block = inventory_results[:, :, idx].sum(
+                            axis=2
+                        )  # (n_inv, n_methods)
+                    loc_blocks.append(block)
+                # Stack blocks across the location axis -> (n_inv, n_methods, n_loc)
+                cat_stacks.append(spnd.stack(loc_blocks, axis=2))
+
+            # Stack across categories -> (n_inv, n_methods, n_cat, n_loc)
+            return spnd.stack(cat_stacks, axis=2)
 
     if use_distributions == 0:
         # Regular LCA calculations
@@ -613,37 +647,15 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         if debug:
             logging.info(f"inventory_results shape: {inventory_results.shape}")
 
-        # Unify downstream aggregation
-        # inventory_results: (n_inv, second_dim=n_methods, n_cols)
-        n_inv, second_dim, _ = inventory_results.shape
-        n_cat = len(lca.acts_category_idx_dict)
-        n_loc = len(lca.acts_location_idx_dict)
-
-        zeros_block = spnd.zeros((n_inv, second_dim), dtype=inventory_results.dtype)
-
-        cat_stacks = []
-        for cat in range(n_cat):
-            loc_blocks = []
-            for loc in range(n_loc):
-                idx = dict_loc_cat.get((cat, loc))
-                if idx is None or idx.size == 0:
-                    block = zeros_block  # (n_inv, n_methods)
-                else:
-                    block = inventory_results[:, :, idx].sum(
-                        axis=2
-                    )  # (n_inv, n_methods)
-                loc_blocks.append(block)
-            # Stack blocks across the location axis -> (n_inv, n_methods, n_loc)
-            cat_stacks.append(spnd.stack(loc_blocks, axis=2))
-
-        # Stack across categories -> (n_inv, n_methods, n_cat, n_loc)
-        iter_results = spnd.stack(cat_stacks, axis=2)
+        iter_results = _aggregate_inventory_results(
+            inventory_results, dict_loc_cat, full_distributions
+        )
 
         if debug:
             logging.info(f"iter_results shape: {iter_results.shape}")
 
         # Save without densifying
-        iter_results_filepath = DIR_CACHED_DB / f"iter_results_{uuid.uuid4()}.npz"
+        iter_results_filepath = cache_dir/ f"iter_results_{uuid.uuid4()}.npz"
         spnd.save_npz(
             filename=iter_results_filepath, matrix=iter_results, compressed=True
         )
@@ -653,7 +665,7 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         # Monte Carlo: same sparse flow per iteration
         iter_param_vals = []
         with CustomFilter("(almost) singular matrix"):
-            for _ in range(use_distributions):
+            for i in range(use_distributions):
                 next(lca)
                 lca.lci()
 
@@ -680,32 +692,13 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
                         lca, characterization_matrix.tocsr()
                     )
 
-                # Aggregate to (n_inv, n_methods, n_cat, n_loc)
-                n_inv, second_dim, _ = inventory_results.shape
-                n_cat = len(lca.acts_category_idx_dict)
-                n_loc = len(lca.acts_location_idx_dict)
-
-                zeros_block = spnd.zeros(
-                    (n_inv, second_dim), dtype=inventory_results.dtype
+                iter_results = _aggregate_inventory_results(
+                    inventory_results, dict_loc_cat, full_distributions
                 )
-
-                cat_stacks = []
-                for cat in range(n_cat):
-                    loc_blocks = []
-                    for loc in range(n_loc):
-                        idx = dict_loc_cat.get((cat, loc))
-                        if idx is None or idx.size == 0:
-                            block = zeros_block
-                        else:
-                            block = inventory_results[:, :, idx].sum(axis=2)
-                        loc_blocks.append(block)
-                    cat_stacks.append(spnd.stack(loc_blocks, axis=2))
-
-                iter_results = spnd.stack(cat_stacks, axis=2)
 
                 # Save per-iteration sparse tensor
                 iter_results_filepath = (
-                    DIR_CACHED_DB / f"iter_results_{uuid.uuid4()}.npz"
+                    cache_dir/ f"iter_results_{uuid.uuid4()}.npz"
                 )
                 spnd.save_npz(
                     filename=iter_results_filepath, matrix=iter_results, compressed=True
@@ -721,17 +714,17 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
                 )
 
         # Save MC parameter draws
-        iter_param_vals_filepath = DIR_CACHED_DB / f"iter_param_vals_{uuid.uuid4()}.npy"
+        iter_param_vals_filepath = cache_dir/ f"iter_param_vals_{uuid.uuid4()}.npy"
         np.save(file=iter_param_vals_filepath, arr=np.stack(iter_param_vals, axis=-1))
 
         # Save indices
         id_uncertainty_indices_filepath = (
-            DIR_CACHED_DB / f"mc_indices_{uuid.uuid4()}.npy"
+            cache_dir/ f"mc_indices_{uuid.uuid4()}.npy"
         )
         np.save(file=id_uncertainty_indices_filepath, arr=lca.uncertain_parameters)
 
         id_technosphere_indices_filepath = (
-            DIR_CACHED_DB / f"tech_indices_{uuid.uuid4()}.pkl"
+            cache_dir/ f"tech_indices_{uuid.uuid4()}.pkl"
         )
         pickle.dump(
             lca.technosphere_indices, open(id_technosphere_indices_filepath, "wb")
@@ -773,6 +766,7 @@ def _calculate_year(args: tuple):
         edges_methods,
         demand_cutoff,
         filepaths,
+        cache_dir,
         mapping,
         units,
         lca_coords,
@@ -782,6 +776,7 @@ def _calculate_year(args: tuple):
         geography_mapping,
         debug,
         use_distributions,
+        full_distributions,
         shares,
         uncertain_parameters,
         remove_uncertainty,
@@ -1055,10 +1050,11 @@ def _calculate_year(args: tuple):
         lca.acts_category_idx_dict = acts_category_idx_dict
         lca.acts_location_idx_dict = acts_location_idx_dict
 
+        uncertain_indices = np.unique(uncertain_parameters)
         lca.technosphere_indices = {
             k: v
             for k, v in lca.technosphere_indices.items()
-            if v in {value for tup in lca.uncertain_parameters for value in tup}
+            if v in uncertain_indices
         }
 
         if methods:
@@ -1123,6 +1119,8 @@ def _calculate_year(args: tuple):
                 debug,
                 use_distributions,
                 uncertain_parameters,
+                full_distributions,
+                cache_dir,
             )
         )
 
