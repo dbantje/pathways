@@ -1,128 +1,128 @@
-# Wind:
-#   onshore-DDPM:
-#     name: electricity production, wind, 1-3MW turbine, onshore, direct drive
-#     reference product: electricity, high voltage
+Wind:
+  onshore-DDPM:
+    name: electricity production, wind, 1-3MW turbine, onshore, direct drive
+    reference product: electricity, high voltage
+    unit: kilowatt hour
+    share:
+      2020:
+        loc: 0.19
+      2050:
+        minimum: 0.15
+        maximum: 0.25
+        uncertainty_type: uniform
+  onshore-Gearbox:
+    name: electricity production, wind, 1-3MW turbine, onshore
+    reference product: electricity, high voltage
+    unit: kilowatt hour
+    share:
+      2020:
+        loc: 0.77
+      2050:
+#        minimum: 0.67
+        minimum: 0.60
+        maximum: 0.77
+        uncertainty_type: uniform
+  offshore-DDPM:
+    name: electricity production, wind, 1-3MW turbine, offshore, direct drive
+    reference product: electricity, high voltage
+    unit: kilowatt hour
+    share:
+      2020:
+        loc: 0.022
+      2050:
+        minimum: 0.022
+        maximum: 0.15
+        uncertainty_type: uniform
+  offshore-Gearbox:
+    name: electricity production, wind, 1-3MW turbine, offshore
+    reference product: electricity, high voltage
+    unit: kilowatt hour
+    share:
+      2020:
+        loc: 0.018
+      2050:
+        minimum: 0.018
+        maximum: 0.10
+        uncertainty_type: uniform
+# PV:
+#   market:
+#     name: electricity production, photovoltaic, commercial
+#     reference product: electricity, low voltage
 #     unit: kilowatt hour
 #     share:
 #       2020:
-#         loc: 0.19
+#         loc: 0.0001
 #       2050:
-#         minimum: 0.15
-#         maximum: 0.25
+#         minimum: 0.0
+#         maximum: 0.0001
 #         uncertainty_type: uniform
-#   onshore-Gearbox:
-#     name: electricity production, wind, 1-3MW turbine, onshore
-#     reference product: electricity, high voltage
+#   c-Si:
+#     name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, multi-Si, laminated, integrated
+#     reference product: electricity, low voltage
 #     unit: kilowatt hour
 #     share:
 #       2020:
-#         loc: 0.77
+#         loc: 0.9440
 #       2050:
-# #        minimum: 0.67
-#         minimum: 0.60
-#         maximum: 0.77
+# #        minimum: 0.50
+#         minimum: 0.40
+#         maximum: 0.9440
 #         uncertainty_type: uniform
-#   offshore-DDPM:
-#     name: electricity production, wind, 1-3MW turbine, offshore, direct drive
-#     reference product: electricity, high voltage
+#   CdTe:
+#     name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, CdTe, laminated, integrated
+#     reference product: electricity, low voltage
 #     unit: kilowatt hour
 #     share:
 #       2020:
-#         loc: 0.022
+#         loc: 0.0400
 #       2050:
-#         minimum: 0.022
-#         maximum: 0.15
+#         minimum: 0.0
+#         maximum: 0.2500
 #         uncertainty_type: uniform
-#   offshore-Gearbox:
-#     name: electricity production, wind, 1-3MW turbine, offshore
-#     reference product: electricity, high voltage
+#   CIGS:
+#     name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, CIS, panel, mounted
+#     reference product: electricity, low voltage
 #     unit: kilowatt hour
 #     share:
 #       2020:
-#         loc: 0.018
+#         loc: 0.0150
 #       2050:
-#         minimum: 0.018
-#         maximum: 0.10
+#         minimum: 0.0
+#         maximum: 0.1250
 #         uncertainty_type: uniform
-PV:
-  market:
-    name: electricity production, photovoltaic, commercial
-    reference product: electricity, low voltage
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0001
-      2050:
-        minimum: 0.0
-        maximum: 0.0001
-        uncertainty_type: uniform
-  c-Si:
-    name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, multi-Si, laminated, integrated
-    reference product: electricity, low voltage
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.9440
-      2050:
-#        minimum: 0.50
-        minimum: 0.40
-        maximum: 0.9440
-        uncertainty_type: uniform
-  CdTe:
-    name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, CdTe, laminated, integrated
-    reference product: electricity, low voltage
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0400
-      2050:
-        minimum: 0.0
-        maximum: 0.2500
-        uncertainty_type: uniform
-  CIGS:
-    name: electricity production, photovoltaic, photovoltaic slanted-roof installation, 3 kWp, CIS, panel, mounted
-    reference product: electricity, low voltage
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0150
-      2050:
-        minimum: 0.0
-        maximum: 0.1250
-        uncertainty_type: uniform
-  a-Si:
-    name: electricity production, photovoltaic, 3kWp slanted-roof installation, a-Si, laminated, integrated
-    reference product: electricity, low voltage
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0010
-      2050:
-        minimum: 0.0000
-        maximum: 0.001
-        uncertainty_type: uniform
-  Perovskite:
-    name: electricity production, photovoltaic, 0.5kWp, perovskite-on-silicon tandem
-    reference product: electricity production, photovoltaic, 0.5kWp, perovskite-on-silicon tandem
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0000
-      2050:
-        minimum: 0.0000
-        maximum: 0.3000
-        uncertainty_type: uniform
-  GaAs:
-    name: electricity production, photovoltaic, 0.28kWp, GaAs
-    reference product: electricity production, photovoltaic, 0.28kWp, GaAs
-    unit: kilowatt hour
-    share:
-      2020:
-        loc: 0.0000
-      2050:
-        minimum: 0.0000
-        maximum: 0.1500
-        uncertainty_type: uniform
+#   a-Si:
+#     name: electricity production, photovoltaic, 3kWp slanted-roof installation, a-Si, laminated, integrated
+#     reference product: electricity, low voltage
+#     unit: kilowatt hour
+#     share:
+#       2020:
+#         loc: 0.0010
+#       2050:
+#         minimum: 0.0000
+#         maximum: 0.001
+#         uncertainty_type: uniform
+#   Perovskite:
+#     name: electricity production, photovoltaic, 0.5kWp, perovskite-on-silicon tandem
+#     reference product: electricity production, photovoltaic, 0.5kWp, perovskite-on-silicon tandem
+#     unit: kilowatt hour
+#     share:
+#       2020:
+#         loc: 0.0000
+#       2050:
+#         minimum: 0.0000
+#         maximum: 0.3000
+#         uncertainty_type: uniform
+#   GaAs:
+#     name: electricity production, photovoltaic, 0.28kWp, GaAs
+#     reference product: electricity production, photovoltaic, 0.28kWp, GaAs
+#     unit: kilowatt hour
+#     share:
+#       2020:
+#         loc: 0.0000
+#       2050:
+#         minimum: 0.0000
+#         maximum: 0.1500
+#         uncertainty_type: uniform
 # CSP:
 #   Parabolic trough:
 #     name: electricity production, solar thermal parabolic trough, 50 MW

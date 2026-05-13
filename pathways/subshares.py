@@ -12,12 +12,12 @@ from stats_arrays import *
 from pathways.filesystem_constants import DATA_DIR, USER_LOGS_DIR
 from pathways.utils import get_activity_indices
 
-SUBSHARES = DATA_DIR / "technologies_shares.yaml"
+SUBSHARES = DATA_DIR / "some_other_shares.yaml"
 
 logger = logging.getLogger(__name__)
 
 
-def load_subshares() -> dict:
+def load_subshares(take_central_value=False) -> dict:
     """Load technology share definitions from the bundled YAML file.
 
     :returns: Validated share configuration keyed by category and technology.
@@ -27,10 +27,37 @@ def load_subshares() -> dict:
     with open(SUBSHARES) as stream:
         data = yaml.safe_load(stream)
 
+    if take_central_value:
+        for group, technologies in data.items():
+            for technology, tdict in technologies.items():
+                if "share" in tdict:
+                    for year, params in tdict["share"].items():
+                        data[group][technology]["share"][year] = get_central_value(params)
+
     if not isinstance(data, dict):
         raise ValueError("Subshares data should be a dictionary.")
 
     return check_subshares(check_uncertainty_params(data))
+
+
+def get_central_value(params):
+    """Calculate the central value for a given set of uncertainty parameters.
+
+    :param params: Uncertainty parameters for a specific technology and year.
+    :type params: dict
+    :returns: Central value based on the specified uncertainty type and parameters.
+    :rtype: float
+    """
+
+    if "loc" in params:
+        return {"loc": params["loc"]}
+    elif "minimum" in params and "maximum" in params:
+        return {"loc": (params["minimum"] + params["maximum"]) / 2}
+    else:
+        logger.warning(
+            f"Cannot determine central value for parameters: {params}. Defaulting to 1."
+        )
+        return {"loc": 1.0}
 
 
 def check_uncertainty_params(data):
@@ -155,16 +182,17 @@ def find_technology_indices(
                 regional_indices = category_dict.setdefault(region, {})
 
                 activity_key = create_activity_key(info, region)
-                activity_index = get_activity_indices(
+                matches = get_activity_indices(
                     [activity_key], technosphere_indices, geo
-                )[0]
+                )
 
-                if activity_index is None:
+                if len(matches) == 0:
                     print(
-                        f"Warning: No activity index found for technology '{tech}' in region '{region}'."
+                        f"Warning: No matches found for technology '{tech}' in region '{region}' with activity key {activity_key}."
                     )
                     continue
-
+                    
+                activity_index = matches[0]
                 tech_data = regional_indices.setdefault(tech, {"idx": activity_index})
                 tech_data["share"] = info.get("share", {})
 
@@ -427,6 +455,7 @@ def interpolate_for_year(
 def generate_samples(
     years: list,
     iterations: int = 10,
+    central_value: bool = False,
 ) -> dict:
     """Generate share samples across requested years, including interpolation.
 
@@ -437,7 +466,7 @@ def generate_samples(
     :returns: Normalized and interpolated share samples.
     :rtype: dict
     """
-    ranges = load_subshares()
+    ranges = load_subshares(take_central_value=central_value)
     shares = load_and_normalize_shares(
         ranges,
         iterations,
