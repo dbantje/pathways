@@ -237,8 +237,7 @@ def get_lca_matrices(
                 ],
                 dtype=bwp.UNCERTAINTY_DTYPE,
             )
-
-        if matrix_name == "biosphere_matrix":
+        elif matrix_name == "biosphere_matrix":
             # Apply uncertainty filter if provided
             if deterministic_categories:
                 avoiddict = get_sparse_avoidance_dict(
