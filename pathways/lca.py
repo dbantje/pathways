@@ -101,9 +101,7 @@ def get_sparse_avoidance_dict(
     # precalculate flows to remove based on LCIA method categories
     flows = get_lcia_methods(deterministic_categories.keys(), ei_version)
     remove_rows = [
-        [
-            v for k, v in biosphere_inds.items() if (k[0], k[1], k[2]) in list(set(f))
-        ]
+        [v for k, v in biosphere_inds.items() if (k[0], k[1], k[2]) in list(set(f))]
         for f in flows.values()
     ]
     all_flows = set(sum(remove_rows, []))
@@ -118,7 +116,11 @@ def get_sparse_avoidance_dict(
     for m, rlist in zip(deterministic_categories.keys(), remove_rows):
         catlist = deterministic_categories[m]
         deterministic_activities = sum([acts[cat] for cat in catlist], [])
-        remove_cols = [v for k, v in technosphere_inds.items() if (k[0], k[1]) in deterministic_activities]
+        remove_cols = [
+            v
+            for k, v in technosphere_inds.items()
+            if (k[0], k[1]) in deterministic_activities
+        ]
         for i in rlist:
             avoiddict[i] += remove_cols
 
@@ -239,9 +241,13 @@ def get_lca_matrices(
         if matrix_name == "biosphere_matrix":
             # Apply uncertainty filter if provided
             if deterministic_categories:
-                avoiddict = get_sparse_avoidance_dict(technosphere_inds, biosphere_inds, deterministic_categories,
-                                                      classifications, ei_version
-                    )
+                avoiddict = get_sparse_avoidance_dict(
+                    technosphere_inds,
+                    biosphere_inds,
+                    deterministic_categories,
+                    classifications,
+                    ei_version,
+                )
                 new_distributions = []
                 counter = 0
                 for i, x in zip(indices, distributions):
@@ -252,7 +258,9 @@ def get_lca_matrices(
                         counter += 1
                     else:
                         new_distributions.append(x)
-                print(f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic.")
+                print(
+                    f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic."
+                )
                 distributions = np.array(new_distributions, dtype=bwp.UNCERTAINTY_DTYPE)
 
         if matrix_name == "technosphere_matrix":
@@ -1086,7 +1094,9 @@ def _calculate_year(args: tuple):
 
         if shares:
             indexed_regions = geo.iam_regions if apply_subshares_globally else regions
-            shares_indices = find_technology_indices(indexed_regions, technosphere_indices, geo)
+            shares_indices = find_technology_indices(
+                indexed_regions, technosphere_indices, geo
+            )
             correlated_arrays = adjust_matrix_based_on_shares(
                 lca=lca,
                 shares_dict=shares_indices,

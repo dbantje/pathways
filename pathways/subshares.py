@@ -32,7 +32,9 @@ def load_subshares(take_central_value=False) -> dict:
             for technology, tdict in technologies.items():
                 if "share" in tdict:
                     for year, params in tdict["share"].items():
-                        data[group][technology]["share"][year] = get_central_value(params)
+                        data[group][technology]["share"][year] = get_central_value(
+                            params
+                        )
 
     if not isinstance(data, dict):
         raise ValueError("Subshares data should be a dictionary.")
@@ -191,7 +193,7 @@ def find_technology_indices(
                         f"Warning: No matches found for technology '{tech}' in region '{region}' with activity key {activity_key}."
                     )
                     continue
-                    
+
                 activity_index = matches[0]
                 tech_data = regional_indices.setdefault(tech, {"idx": activity_index})
                 tech_data["share"] = info.get("share", {})
