@@ -237,30 +237,29 @@ def get_lca_matrices(
                 ],
                 dtype=bwp.UNCERTAINTY_DTYPE,
             )
-        elif matrix_name == "biosphere_matrix":
+        elif matrix_name == "biosphere_matrix" and deterministic_categories:
             # Apply uncertainty filter if provided
-            if deterministic_categories:
-                avoiddict = get_sparse_avoidance_dict(
-                    technosphere_inds,
-                    biosphere_inds,
-                    deterministic_categories,
-                    classifications,
-                    ei_version,
-                )
-                new_distributions = []
-                counter = 0
-                for i, x in zip(indices, distributions):
-                    if i[1] in avoiddict.get(i[0], []):
-                        new_distributions.append(
-                            (0, None, None, None, None, None, False)
-                        )
-                        counter += 1
-                    else:
-                        new_distributions.append(x)
-                print(
-                    f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic."
-                )
-                distributions = np.array(new_distributions, dtype=bwp.UNCERTAINTY_DTYPE)
+            avoiddict = get_sparse_avoidance_dict(
+                technosphere_inds,
+                biosphere_inds,
+                deterministic_categories,
+                classifications,
+                ei_version,
+            )
+            new_distributions = []
+            counter = 0
+            for i, x in zip(indices, distributions):
+                if i[1] in avoiddict.get(i[0], []):
+                    new_distributions.append(
+                        (0, None, None, None, None, None, False)
+                    )
+                    counter += 1
+                else:
+                    new_distributions.append(x)
+            print(
+                f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic."
+            )
+            distributions = np.array(new_distributions, dtype=bwp.UNCERTAINTY_DTYPE)
 
         if matrix_name == "technosphere_matrix":
             uncertain_parameters = find_uncertain_parameters(distributions, indices)
