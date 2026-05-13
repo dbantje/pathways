@@ -16,6 +16,7 @@ from collections import OrderedDict
 from datetime import datetime
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple, Union
+from shutil import rmtree
 
 import numpy as np
 import pandas as pd
@@ -497,7 +498,10 @@ def clean_cache_directory():
     """
 
     for file in get_visible_files(DIR_CACHED_DB):
-        file.unlink()
+        if file.is_dir():
+            rmtree(file)
+        else:
+            file.unlink()
 
 
 def resize_scenario_data(
