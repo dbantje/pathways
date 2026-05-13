@@ -250,9 +250,7 @@ def get_lca_matrices(
             counter = 0
             for i, x in zip(indices, distributions):
                 if i[1] in avoiddict.get(i[0], []):
-                    new_distributions.append(
-                        (0, None, None, None, None, None, False)
-                    )
+                    new_distributions.append((0, None, None, None, None, None, False))
                     counter += 1
                 else:
                     new_distributions.append(x)
