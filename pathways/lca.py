@@ -25,7 +25,7 @@ import numpy as np
 import sparse as spnd
 
 from .filesystem_constants import DIR_CACHED_DB, DATA_DIR, STATS_DIR
-from .lcia import fill_characterization_factors_matrices
+from .lcia import fill_characterization_factors_matrices, get_lcia_methods
 from .subshares import (
     adjust_matrix_based_on_shares,
     find_technology_indices,
@@ -91,6 +91,41 @@ def load_matrix_and_index(
     return data_array, indices_array, flip_array, distributions_array
 
 
+def get_sparse_avoidance_dict(
+    technosphere_inds,
+    biosphere_inds,
+    deterministic_categories: dict[str, list[str]],
+    classifications,
+    ei_version,
+) -> dict[int, list[int]]:
+    # precalculate flows to remove based on LCIA method categories
+    flows = get_lcia_methods(deterministic_categories.keys(), ei_version)
+    remove_rows = [
+        [
+            v for k, v in biosphere_inds.items() if (k[0], k[1], k[2]) in list(set(f))
+        ]
+        for f in flows.values()
+    ]
+    all_flows = set(sum(remove_rows, []))
+    avoiddict = {k: [] for k in all_flows}
+
+    # precalculate category to activity mapping
+    categories = set(sum(deterministic_categories.values(), []))
+    acts = {
+        cat: [k for k, v in classifications.items() if v == cat] for cat in categories
+    }
+
+    for m, rlist in zip(deterministic_categories.keys(), remove_rows):
+        catlist = deterministic_categories[m]
+        deterministic_activities = sum([acts[cat] for cat in catlist], [])
+        remove_cols = [v for k, v in technosphere_inds.items() if (k[0], k[1]) in deterministic_activities]
+        for i in rlist:
+            avoiddict[i] += remove_cols
+
+    # collapse lists to unique values
+    return {k: list(set(v)) for k, v in avoiddict.items()}
+
+
 def get_lca_matrices(
     filepaths: list,
     model: str,
@@ -102,6 +137,9 @@ def get_lca_matrices(
     geo: Geomap = None,
     remove_uncertainty: bool = False,
     change_pm_compartments: bool = False,
+    deterministic_categories: dict = [],
+    classifications: dict = None,
+    ei_version: str = "3.11",
 ) -> tuple[
     Datapackage,
     dict[tuple[str, str, str, str], int],
@@ -197,6 +235,25 @@ def get_lca_matrices(
                 ],
                 dtype=bwp.UNCERTAINTY_DTYPE,
             )
+
+        if matrix_name == "biosphere_matrix":
+            # Apply uncertainty filter if provided
+            if deterministic_categories:
+                avoiddict = get_sparse_avoidance_dict(technosphere_inds, biosphere_inds, deterministic_categories,
+                                                      classifications, ei_version
+                    )
+                new_distributions = []
+                counter = 0
+                for i, x in zip(indices, distributions):
+                    if i[1] in avoiddict.get(i[0], []):
+                        new_distributions.append(
+                            (0, None, None, None, None, None, False)
+                        )
+                        counter += 1
+                    else:
+                        new_distributions.append(x)
+                print(f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic.")
+                distributions = np.array(new_distributions, dtype=bwp.UNCERTAINTY_DTYPE)
 
         if matrix_name == "technosphere_matrix":
             uncertain_parameters = find_uncertain_parameters(distributions, indices)
@@ -776,9 +833,11 @@ def _calculate_year(args: tuple):
         use_distributions,
         full_distributions,
         shares,
+        apply_subshares_globally,
         uncertain_parameters,
         remove_uncertainty,
         change_pm_compartments,
+        deterministic_categories,
         seed,
         double_accounting,
         ei_version,
@@ -822,6 +881,9 @@ def _calculate_year(args: tuple):
             geo=geo,
             remove_uncertainty=remove_uncertainty,
             change_pm_compartments=change_pm_compartments,
+            deterministic_categories=deterministic_categories,
+            classifications=classifications,
+            ei_version=ei_version,
         )
 
     except FileNotFoundError:
@@ -1023,7 +1085,8 @@ def _calculate_year(args: tuple):
                     )
 
         if shares:
-            shares_indices = find_technology_indices(regions, technosphere_indices, geo)
+            indexed_regions = geo.iam_regions if apply_subshares_globally else regions
+            shares_indices = find_technology_indices(indexed_regions, technosphere_indices, geo)
             correlated_arrays = adjust_matrix_based_on_shares(
                 lca=lca,
                 shares_dict=shares_indices,

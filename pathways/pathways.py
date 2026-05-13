@@ -28,7 +28,7 @@ from edges import get_available_methods
 from .data_validation import validate_datapackage
 from .filesystem_constants import DATA_DIR, USER_LOGS_DIR, DIR_CACHED_DB
 from .lca import _calculate_year, get_lca_matrices
-from .lcia import get_lcia_method_names
+from .lcia import get_lcia_method_names, get_lcia_methods
 from .stats import log_mc_parameters_to_excel
 from .subshares import generate_samples
 from .utils import (
@@ -504,7 +504,10 @@ class Pathways:
         use_distributions: int = 0,
         full_distributions: bool = False,
         subshares: bool = False,
+        apply_subshares_globally: bool = False,
+        centralize_subshares: bool = False,
         remove_uncertainty: bool = False,
+        deterministic_categories: list = [],
         change_pm_compartments: bool = False,
         seed: int = 0,
         multiprocessing: bool = True,
@@ -616,6 +619,9 @@ class Pathways:
                 scenario=scenarios[0],
                 year=years[0],
                 change_pm_compartments=change_pm_compartments,
+                deterministic_categories=deterministic_categories,
+                classifications=self.classifications,
+                ei_version=self.ei_version,
             )
         except Exception as e:
             logging.error(f"Error retrieving LCA matrices: {str(e)}")
@@ -648,6 +654,7 @@ class Pathways:
             shares = generate_samples(
                 years=self.scenarios.coords["year"].values.tolist(),
                 iterations=use_distributions,
+                central_value=centralize_subshares,
             )
 
         # Iterate over each combination of model, scenario, and year
@@ -680,9 +687,11 @@ class Pathways:
                         use_distributions,
                         full_distributions,
                         shares,
+                        apply_subshares_globally,
                         uncertain_parameters,
                         remove_uncertainty,
                         change_pm_compartments,
+                        deterministic_categories,
                         seed,
                         double_accounting,
                         self.ei_version,
