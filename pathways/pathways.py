@@ -500,7 +500,6 @@ class Pathways:
         regions: Optional[List[str]] = None,
         years: Optional[List[int]] = None,
         variables: Optional[List[str]] = None,
-        demand_cutoff: float = 1e-3,
         use_distributions: int = 0,
         full_distributions: bool = False,
         subshares: bool = False,
@@ -528,8 +527,6 @@ class Pathways:
         :type years: list[int] | None
         :param variables: Scenario variables supplying demand.
         :type variables: list[str] | None
-        :param demand_cutoff: Minimum total demand required to run a functional unit.
-        :type demand_cutoff: float
         :param use_distributions: Number of Monte Carlo iterations; ``0`` performs deterministic runs.
         :type use_distributions: int
         :param subshares: Whether to sample sub-technology market share distributions.
@@ -673,7 +670,6 @@ class Pathways:
                         variables,
                         methods,
                         edges_methods,
-                        demand_cutoff,
                         self.filepaths,
                         self.cache_dir,
                         self.mapping,

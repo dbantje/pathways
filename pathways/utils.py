@@ -26,6 +26,7 @@ from datapackage import DataPackage, DataPackageException
 from premise.geomap import Geomap
 
 from .filesystem_constants import DATA_DIR, DIR_CACHED_DB
+from .lcia import get_lcia_methods
 
 CLASSIFICATIONS = DATA_DIR / "classifications_interventionpaper.csv"
 UNITS_CONVERSION = DATA_DIR / "units_conversion.yaml"
@@ -699,6 +700,91 @@ def change_compartments_PM(filepaths) -> None:
 
     # save new matrix
     Bdata_new.to_csv(fp_biosphere, sep=";", index=False)
+
+
+def get_sparse_avoidance_dict(
+    technosphere_inds,
+    biosphere_inds,
+    deterministic_categories: dict[str, list[str]],
+    classifications,
+    ei_version,
+) -> dict[int, list[int]]:
+    # precalculate flows to remove based on LCIA method categories
+    flows = get_lcia_methods(deterministic_categories.keys(), ei_version)
+    remove_rows = [
+        [v for k, v in biosphere_inds.items() if k in list(set(f))]
+        for f in flows.values()
+    ]
+    all_flows = set(sum(remove_rows, []))
+    avoiddict = {k: [] for k in all_flows}
+
+    # precalculate category to activity mapping
+    categories = set(sum(deterministic_categories.values(), []))
+    acts = {
+        cat: [k for k, v in classifications.items() if v == cat] for cat in categories
+    }
+
+    for m, rlist in zip(deterministic_categories.keys(), remove_rows):
+        catlist = deterministic_categories[m]
+        deterministic_activities = sum([acts[cat] for cat in catlist], [])
+        remove_cols = [
+            v
+            for k, v in technosphere_inds.items()
+            if (k[0], k[1]) in deterministic_activities
+        ]
+        for i in rlist:
+            avoiddict[i] += remove_cols
+
+    # collapse lists to unique values
+    return {k: list(set(v)) for k, v in avoiddict.items()}
+
+
+def filter_biosphere_uncertainties(
+    filepaths,
+    deterministic_categories: dict[str, list[str]],
+    classifications,
+    ei_version,
+) -> None:
+    # select filepaths
+    def select_filepath(keyword: str, fps):
+        matches = [fp for fp in fps if keyword in fp.name]
+        if not matches:
+            raise FileNotFoundError(f"Expected file containing '{keyword}' not found.")
+        return matches[0]
+
+    # load indices and biosphere matrix
+    technosphere_inds = read_indices_csv(select_filepath(("A_matrix_index"), filepaths))
+    biosphere_inds = read_indices_csv(select_filepath(("B_matrix_index"), filepaths))
+    biosphere_inds = {k[:-1]: v for k, v in biosphere_inds.items()}
+    fp_biosphere = select_filepath(
+        "B_matrix", [fp for fp in filepaths if "index" not in fp.name]
+    )
+    Bdata = pd.read_csv(fp_biosphere, sep=";").set_index(["index of activity", "index of biosphere flow"])
+
+    # get indices for which to remove uncertainty
+    avoiddict = get_sparse_avoidance_dict(
+        technosphere_inds, biosphere_inds, deterministic_categories, classifications, ei_version
+    )
+    avoidrows = []
+    avoidcols = []
+    for flow_idx, act_indices in avoiddict.items():
+        avoidrows.extend(len(act_indices) * [flow_idx])
+        avoidcols.extend(act_indices)
+    avoididx = pd.MultiIndex.from_arrays([avoidcols, avoidrows], names=["index of activity", "index of biosphere flow"])
+    avoididx = avoididx.intersection(Bdata.index)
+
+    # set uncertainty type to 0 for the selected flows
+    Bdata.loc[avoididx, "uncertainty type"] = 0
+    Bdata.loc[avoididx, "loc"] = Bdata.loc[avoididx, "value"]
+    Bdata.loc[avoididx, "scale"] = np.nan
+    Bdata.loc[avoididx, "shape"] = np.nan
+    Bdata.loc[avoididx, "minimum"] = np.nan
+    Bdata.loc[avoididx, "maximum"] = np.nan 
+    Bdata.loc[avoididx, "negative"] = Bdata.loc[avoididx, "negative"]
+    Bdata.loc[avoididx, "flip"] = 1
+
+    # save new matrix
+    Bdata.reset_index().to_csv(fp_biosphere, sep=";", index=False)
 
 
 def fetch_indices(

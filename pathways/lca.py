@@ -43,6 +43,7 @@ from .utils import (
     get_combined_filters,
     apply_filters,
     change_compartments_PM,
+    filter_biosphere_uncertainties,
 )
 from .stats import log_double_accounting, log_double_accounting_flows
 
@@ -91,41 +92,7 @@ def load_matrix_and_index(
     return data_array, indices_array, flip_array, distributions_array
 
 
-def get_sparse_avoidance_dict(
-    technosphere_inds,
-    biosphere_inds,
-    deterministic_categories: dict[str, list[str]],
-    classifications,
-    ei_version,
-) -> dict[int, list[int]]:
-    # precalculate flows to remove based on LCIA method categories
-    flows = get_lcia_methods(deterministic_categories.keys(), ei_version)
-    remove_rows = [
-        [v for k, v in biosphere_inds.items() if (k[0], k[1], k[2]) in list(set(f))]
-        for f in flows.values()
-    ]
-    all_flows = set(sum(remove_rows, []))
-    avoiddict = {k: [] for k in all_flows}
 
-    # precalculate category to activity mapping
-    categories = set(sum(deterministic_categories.values(), []))
-    acts = {
-        cat: [k for k, v in classifications.items() if v == cat] for cat in categories
-    }
-
-    for m, rlist in zip(deterministic_categories.keys(), remove_rows):
-        catlist = deterministic_categories[m]
-        deterministic_activities = sum([acts[cat] for cat in catlist], [])
-        remove_cols = [
-            v
-            for k, v in technosphere_inds.items()
-            if (k[0], k[1]) in deterministic_activities
-        ]
-        for i in rlist:
-            avoiddict[i] += remove_cols
-
-    # collapse lists to unique values
-    return {k: list(set(v)) for k, v in avoiddict.items()}
 
 
 def get_lca_matrices(
@@ -204,6 +171,9 @@ def get_lca_matrices(
 
     if change_pm_compartments:
         change_compartments_PM(fps)
+    if deterministic_categories:
+        print(f"Applying deterministic category filter to biosphere matrix for categories: {deterministic_categories}")
+        filter_biosphere_uncertainties(fps, deterministic_categories, classifications, ei_version)
 
     fp_technosphere_inds = select_filepath("A_matrix_index", fps)
     fp_biosphere_inds = select_filepath("B_matrix_index", fps)
@@ -237,27 +207,6 @@ def get_lca_matrices(
                 ],
                 dtype=bwp.UNCERTAINTY_DTYPE,
             )
-        elif matrix_name == "biosphere_matrix" and deterministic_categories:
-            # Apply uncertainty filter if provided
-            avoiddict = get_sparse_avoidance_dict(
-                technosphere_inds,
-                biosphere_inds,
-                deterministic_categories,
-                classifications,
-                ei_version,
-            )
-            new_distributions = []
-            counter = 0
-            for i, x in zip(indices, distributions):
-                if i[1] in avoiddict.get(i[0], []):
-                    new_distributions.append((0, None, None, None, None, None, False))
-                    counter += 1
-                else:
-                    new_distributions.append(x)
-            print(
-                f"Applied deterministic category filter to biosphere matrix: {counter} out of {len(distributions)} flows set to deterministic."
-            )
-            distributions = np.array(new_distributions, dtype=bwp.UNCERTAINTY_DTYPE)
 
         if matrix_name == "technosphere_matrix":
             uncertain_parameters = find_uncertain_parameters(distributions, indices)
@@ -585,7 +534,6 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         fus_details,
         scenarios,
         units_map,
-        demand_cutoff,
         lca,
         characterization_matrix,  # edges: COO (n_methods, n_bio, n_cols); regular: CSR (n_methods, n_bio)
         methods,
@@ -644,7 +592,6 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         inventory_results, dict_loc_cat, full_distributions
     ):
         if full_distributions:
-            # Sum over all columns to get (n_inv, n_methods)
             return inventory_results.sum(axis=2)
         else:
             n_inv, second_dim, _ = inventory_results.shape
@@ -714,6 +661,8 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
             inventory_results, dict_loc_cat, full_distributions
         )
 
+        
+
         if debug:
             logging.info(f"iter_results shape: {iter_results.shape}")
 
@@ -758,6 +707,8 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
                 iter_results = _aggregate_inventory_results(
                     inventory_results, dict_loc_cat, full_distributions
                 )
+                if full_distributions:
+                    print(iter_results.todense())
 
                 # Save per-iteration sparse tensor
                 iter_results_filepath = cache_dir / f"iter_results_{uuid.uuid4()}.npz"
@@ -823,7 +774,6 @@ def _calculate_year(args: tuple):
         variables,
         methods,
         edges_methods,
-        demand_cutoff,
         filepaths,
         cache_dir,
         mapping,
@@ -1176,7 +1126,6 @@ def _calculate_year(args: tuple):
                 fus_details,
                 scenarios,
                 units,
-                demand_cutoff,
                 lca,
                 characterization_matrix,
                 methods,
