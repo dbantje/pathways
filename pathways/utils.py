@@ -759,18 +759,26 @@ def filter_biosphere_uncertainties(
     fp_biosphere = select_filepath(
         "B_matrix", [fp for fp in filepaths if "index" not in fp.name]
     )
-    Bdata = pd.read_csv(fp_biosphere, sep=";").set_index(["index of activity", "index of biosphere flow"])
+    Bdata = pd.read_csv(fp_biosphere, sep=";").set_index(
+        ["index of activity", "index of biosphere flow"]
+    )
 
     # get indices for which to remove uncertainty
     avoiddict = get_sparse_avoidance_dict(
-        technosphere_inds, biosphere_inds, deterministic_categories, classifications, ei_version
+        technosphere_inds,
+        biosphere_inds,
+        deterministic_categories,
+        classifications,
+        ei_version,
     )
     avoidrows = []
     avoidcols = []
     for flow_idx, act_indices in avoiddict.items():
         avoidrows.extend(len(act_indices) * [flow_idx])
         avoidcols.extend(act_indices)
-    avoididx = pd.MultiIndex.from_arrays([avoidcols, avoidrows], names=["index of activity", "index of biosphere flow"])
+    avoididx = pd.MultiIndex.from_arrays(
+        [avoidcols, avoidrows], names=["index of activity", "index of biosphere flow"]
+    )
     avoididx = avoididx.intersection(Bdata.index)
 
     # set uncertainty type to 0 for the selected flows
@@ -779,7 +787,7 @@ def filter_biosphere_uncertainties(
     Bdata.loc[avoididx, "scale"] = np.nan
     Bdata.loc[avoididx, "shape"] = np.nan
     Bdata.loc[avoididx, "minimum"] = np.nan
-    Bdata.loc[avoididx, "maximum"] = np.nan 
+    Bdata.loc[avoididx, "maximum"] = np.nan
     Bdata.loc[avoididx, "negative"] = Bdata.loc[avoididx, "negative"]
     Bdata.loc[avoididx, "flip"] = 1
 

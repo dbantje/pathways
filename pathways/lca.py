@@ -92,9 +92,6 @@ def load_matrix_and_index(
     return data_array, indices_array, flip_array, distributions_array
 
 
-
-
-
 def get_lca_matrices(
     filepaths: list,
     model: str,
@@ -172,8 +169,12 @@ def get_lca_matrices(
     if change_pm_compartments:
         change_compartments_PM(fps)
     if deterministic_categories:
-        print(f"Applying deterministic category filter to biosphere matrix for categories: {deterministic_categories}")
-        filter_biosphere_uncertainties(fps, deterministic_categories, classifications, ei_version)
+        print(
+            f"Applying deterministic category filter to biosphere matrix for categories: {deterministic_categories}"
+        )
+        filter_biosphere_uncertainties(
+            fps, deterministic_categories, classifications, ei_version
+        )
 
     fp_technosphere_inds = select_filepath("A_matrix_index", fps)
     fp_biosphere_inds = select_filepath("B_matrix_index", fps)
@@ -660,8 +661,6 @@ def process_region(data: Tuple) -> Dict[str, str | List[str] | List[int]]:
         iter_results = _aggregate_inventory_results(
             inventory_results, dict_loc_cat, full_distributions
         )
-
-        
 
         if debug:
             logging.info(f"iter_results shape: {iter_results.shape}")
