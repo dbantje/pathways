@@ -9659,6 +9659,7 @@ primary zinc production from concentrate,zinc,34220: Zinc oxide; zinc peroxide; 
 market for zinc,zinc,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining and basic metals
 heavy mineral sand quarry operation,zircon,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining and basic metals
 market for zircon,zircon,14290: Other non-ferrous metal ores and concentrates (other than uranium or thorium ores and concentrates),mining and basic metals
+market for carbon dioxide removal,"carbon dioxide, captured and stored","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "market for transport, motorbike","transport, motorbike","64119: Other land transportation services of passengers, n.e.c.",road transport
 "market for transport, freight, lorry","transport, freight, lorry",6511: Road transport services of freight,road transport
 "market for transport, freight, lorry, 18 metric ton","transport, freight, lorry",6511: Road transport services of freight,road transport
@@ -9668,7 +9669,6 @@ market for zircon,zircon,14290: Other non-ferrous metal ores and concentrates (o
 "market for transport, freight, lorry, 40 metric ton","transport, freight, lorry",6511: Road transport services of freight,road transport
 "market for transport, freight, train","transport, freight, train",6512: Railway transport services of freight,rail transport
 "natural gas, burned in gas turbine","natural gas, burned in gas turbine",33360: Gas oil,oil and gas products
-market for carbon dioxide removal,"carbon dioxide, captured and stored","34210: Hydrogen, nitrogen, oxygen, carbon dioxide and rare gases; inorganic oxygen compounds of non-metals n.e.c.",chemicals and plastics
 "1,1-difluoroethane production, HFC-152a","1,1-difluoroethane, HFC-152a","34150: Amine-function compounds; oxygen-function amino-compounds, except lysine and its esters and salts thereof and […]",chemicals and plastics
 "CCU-PP production, granulate","CCU-PP, granulate","34710: Polymers of ethylene, in primary forms",chemicals and plastics
 "CO2, captured from cement plant (Hoppe et al.)","CO2, captured from cement plant","34710: Polymers of ethylene, in primary forms",chemicals and plastics
@@ -11315,7 +11315,7 @@ market for waste cement-fibre slab,waste cement-fibre slab,39290: Other non-meta
 "treatment of waste mineral wool, collection for final disposal",waste mineral wool,39990: Other wastes n.e.c.,other waste
 market for waste brick,waste brick,39990: Other wastes n.e.c.,other waste
 "market for blast furnace dust, for recovery","blast furnace dust, for recovery","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
-"treatment of hard coal ash, residual material landfill",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
+"treatment of hard coal ash, residual material landfill",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",other waste
 "market for bottom ash, MSWI[F]-WWT, WW from potato starch production","bottom ash, MSWI[F]-WWT, WW from potato starch production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "market for residues, MSWI[F]-WWT, heat carrier liquid, 40% C3H8O2","residues, MSWI[F]-WWT, heat carrier liquid, 40% C3H8O2","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "treatment of spent antifreezer liquid, hazardous waste incineration, with energy recovery",spent antifreezer liquid,39920: Sewage sludge,other waste
@@ -11814,7 +11814,7 @@ oriented strand board production,"residual wood, dry",39283: Non-agglomerated wo
 "treatment of waste wood, untreated, open burning","waste wood, untreated",3928: Sawdust and wood waste and scrap,other waste
 "cast iron turning, average, conventional","cast iron removed by turning, average, conventional","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 "market for residues, MSWI-WWT, WW from concrete production","residues, MSWI-WWT, WW from concrete production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
-market for spoil from lignite mining,spoil from lignite mining,39990: Other wastes n.e.c.,other waste
+market for spoil from lignite mining,spoil from lignite mining,39990: Other wastes n.e.c.,fossil fuel extraction
 "market for used silencer steel, DN 315","used silencer steel, DN 315","39310: Slag, dross, scalings and other waste from the manufacture of iron or steel",slags and other residues
 "treatment of residue from shredder fraction from manual dismantling, municipal incineration",residue from shredder fraction from manual dismantling,39990: Other wastes n.e.c.,other waste
 market for wastewater from soft fibreboard production,wastewater from soft fibreboard production,39990: Other wastes n.e.c.,other waste
@@ -12511,7 +12511,7 @@ market for cadmium sludge from zinc electrolysis,cadmium sludge from zinc electr
 "market for leachate, SLF, waste glass","leachate, SLF, waste glass",39990: Other wastes n.e.c.,other waste
 "treatment of scrap tin sheet, municipal incineration FAE",scrap tin sheet,39366: Waste and scrap of tin,other metal waste
 "market for sewage sludge, 75% water, WWT, WW from grass refinery","sewage sludge, 75% water, WWT, WW from grass refinery",39920: Sewage sludge,other waste
-market for spoil from hard coal mining,spoil from hard coal mining,39990: Other wastes n.e.c.,other waste
+market for spoil from hard coal mining,spoil from hard coal mining,39990: Other wastes n.e.c.,fossil fuel extraction
 "cement production, ZN/D, new alternative constituents 36-50%, in conformity with SIA 2049",waste brick,39990: Other wastes n.e.c.,other waste
 "treatment of used refrigerant R12, venting",used refrigerant R12,39990: Other wastes n.e.c.,other waste
 market for leach residue from copper production,leach residue from copper production,39361: Waste and scrap of copper,other metal waste
@@ -12707,7 +12707,7 @@ treatment of used bicycle,used bicycle,39990: Other wastes n.e.c.,other waste
 "treatment of residues, MSWI[F]-WWT, WW from plywood production, residual material landfill","residues, MSWI[F]-WWT, WW from plywood production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "treatment of leachate, SLF, waste plastic plaster, wastewater treatment","leachate, SLF, waste plastic plaster",39990: Other wastes n.e.c.,other waste
 "treatment of wastewater from black chrome coating, wastewater treatment",wastewater from black chrome coating,39990: Other wastes n.e.c.,other waste
-"treatment of hard coal ash, municipal incineration",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
+"treatment of hard coal ash, municipal incineration",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",other waste
 "treatment of aluminium in car shredder residue, municipal incineration",aluminium in car shredder residue,39363: Waste and scrap of aluminium,other metal waste
 "sulfate pulp production, from softwood, bleached","sawdust, wet, measured as dry mass",3928: Sawdust and wood waste and scrap,other waste
 market for used tram,used tram,39990: Other wastes n.e.c.,other waste
@@ -12985,7 +12985,7 @@ market for spent antifreezer liquid,spent antifreezer liquid,39920: Sewage sludg
 "treatment of residues, MSWI[F]-WWT-SLF, waste aluminium, residual material landfill","residues, MSWI[F]-WWT-SLF, waste aluminium","3932: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, except[…]",other metal waste
 "market for expansion vessel, 80l","expansion vessel, 80l",39370: Vessels and other floating structures for breaking up,other metal waste
 "spent automobile catalyst, Recycled Content cut-off",spent automobile catalyst,39990: Other wastes n.e.c.,other waste
-"treatment of hard coal ash, sanitary landfill",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
+"treatment of hard coal ash, sanitary landfill",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",other waste
 "treatment of damaged clay material, open dump",damaged clay material,39: Wastes or scraps,other waste
 "market for residues, MSWI[F]-WWT, WW from PV cell production","residues, MSWI[F]-WWT, WW from PV cell production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "treatment of bottom ash, MSWI[F], waste paint, slag compartment","bottom ash, MSWI[F], waste paint","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
@@ -13374,7 +13374,7 @@ market for zinc slag,zinc slag,39365: Waste and scrap of zinc,other metal waste
 "treatment of bottom ash, MSWI, residue from mechanical treatment, laptop computer, slag compartment","bottom ash, MSWI, residue from mechanical treatment, laptop computer","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 market for waste reinforced plasterboard,waste reinforced plasterboard,39990: Other wastes n.e.c.,other waste
 "treatment of residues, MSWI[F], waste plastic, industrial electronics, residual material landfill","residues, MSWI[F], waste plastic, industrial electronics","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
-"treatment of spoil from lignite mining, in surface landfill",spoil from lignite mining,39990: Other wastes n.e.c.,other waste
+"treatment of spoil from lignite mining, in surface landfill",spoil from lignite mining,39990: Other wastes n.e.c.,fossil fuel extraction
 "market for used double glazing, U<1.1W/m2K","used double glazing, U<1.1W/m2K",39990: Other wastes n.e.c.,other waste
 "market for bottom ash, MSWI, zinc in car shredder residue","bottom ash, MSWI, zinc in car shredder residue","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "treatment of sewage sludge, 70% water, WWT-SLF, municipal solid waste, municipal incineration","sewage sludge, 70% water, WWT-SLF, municipal solid waste",39920: Sewage sludge,other waste
@@ -13386,7 +13386,7 @@ market for waste reinforced plasterboard,waste reinforced plasterboard,39990: Ot
 "waste polyethylene terephthalate, for recycling, sorted, Recycled Content cut-off","waste polyethylene terephthalate, for recycling, sorted","39270: Waste, parings and scrap of plastics",other waste
 "treatment of sewage sludge, 70% water, WWT-SLF, waste plastic plaster, municipal incineration FAE","sewage sludge, 70% water, WWT-SLF, waste plastic plaster",39920: Sewage sludge,other waste
 "market for bottom ash, MSWI-WWT, WW from PV cell production","bottom ash, MSWI-WWT, WW from PV cell production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
-"treatment of spoil from hard coal mining, in surface landfill",spoil from hard coal mining,39990: Other wastes n.e.c.,other waste
+"treatment of spoil from hard coal mining, in surface landfill",spoil from hard coal mining,39990: Other wastes n.e.c.,fossil fuel extraction
 "treatment of bottom ash, MSWI[F], waste glass, slag compartment","bottom ash, MSWI[F], waste glass","3932: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, except[…]",other metal waste
 "treatment of waste wood, untreated, unsanitary landfill, moist infiltration class (300mm)","waste wood, untreated",3928: Sawdust and wood waste and scrap,other waste
 "treatment of bottom ash, MSWI-WWT[R], WW from anaerobic digestion of whey, slag compartment","bottom ash, MSWI-WWT[R], WW from anaerobic digestion of whey","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
@@ -13448,7 +13448,7 @@ market for wastewater from liquid crystal production,wastewater from liquid crys
 "treatment of waste polystyrene, unsanitary landfill, dry infiltration class (100mm)",waste polystyrene,"39270: Waste, parings and scrap of plastics",other waste
 market for copper slag,copper slag,39361: Waste and scrap of copper,other metal waste
 "treatment of residues, MSWI, waste polyvinylchloride, residual material landfill","residues, MSWI, waste polyvinylchloride","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
-"treatment of hard coal ash, municipal incineration FAE",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
+"treatment of hard coal ash, municipal incineration FAE",hard coal ash,"39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",other waste
 "treatment of residues, MSWI-WWT, WW from glass production, residual material landfill","residues, MSWI-WWT, WW from glass production","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
 "market for used double glazing, U<1.1W/m2K, laminated safety glass","used double glazing, U<1.1W/m2K, laminated safety glass",39990: Other wastes n.e.c.,other waste
 "treatment of residues, MSWI, waste polyvinylfluoride, residual material landfill","residues, MSWI, waste polyvinylfluoride","39320: Ash and residue (except from the manufacture of iron or steel), containing metals or metallic compounds, excep[…]",slags and other residues
@@ -13706,6 +13706,39 @@ treatment of waste from perovskite module treatment,waste from perovskite module
 "slanted-roof construction, mounted, on roof, Stade de Suisse","slanted-roof construction, mounted, on roof, Stade de Suisse",87360: Installation services of electrical machinery and apparatus n.e.c.,other services
 "photovoltaic installation, 0.28kWp, GaAs","photovoltaic installation, GaAs",87360: Installation services of electrical machinery and apparatus n.e.c.,electricity production
 "photovoltaics, electric installation for 3kWp module, at building","photovoltaic plant, electric installation for 3kWp module",87360: Installation services of electrical machinery and apparatus n.e.c.,electricity production
+"ammonia production, with market-average hydrogen","ammonia, anhydrous, liquid",,biofuel production
 "bioethanol, from non-residual cellulosic biomass, burned in passenger car",heat,,road transport
+"carbon monoxide, from RWGS, for Fischer Tropsch process, market-average hydrogen","carbon monoxide, from RWGS",,biofuel production
+"diesel production, from methanol, market-average hydrogen, CO2 from DAC, economic allocation","diesel, synthetic",,biofuel production
+"diesel production, from methanol, market-average hydrogen, CO2 from DAC, energy allocation","diesel, synthetic",,biofuel production
+"diesel production, synthetic, Fischer Tropsch process, market-average hydrogen, economic allocation","diesel, synthetic",,biofuel production
+"diesel production, synthetic, Fischer Tropsch process, market-average hydrogen, energy allocation","diesel, synthetic",,biofuel production
+"diesel production, synthetic, from Fischer Tropsch process, market-average hydrogen, economic allocation, at fuelling station","diesel, synthetic, vehicle grade",,biofuel production
+"diesel production, synthetic, from Fischer Tropsch process, market-average hydrogen, energy allocation, at fuelling station","diesel, synthetic, vehicle grade",,biofuel production
+"diesel production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, economic allocation, at fuelling station","diesel, synthetic, vehicle grade",,biofuel production
+"diesel production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, energy allocation, at fuelling station","diesel, synthetic, vehicle grade",,biofuel production
 "ethanol production, via fermentation, from wheat, with carbon capture and storage","ethanol, from wheat grains",,biofuel production
 "ethanol, from wheat grains, with carbon capture and storage, energy allocation, at fuelling station","ethanol, without water, in 99.7% solution state, vehicle grade",,biofuel production
+"gasoline production, from methanol, market-average hydrogen, CO2 from DAC, economic allocation","gasoline, synthetic",,biofuel production
+"gasoline production, from methanol, market-average hydrogen, CO2 from DAC, energy allocation","gasoline, synthetic",,biofuel production
+"gasoline production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, economic allocation, at fuelling station","gasoline, synthetic, vehicle grade",,biofuel production
+"gasoline production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, energy allocation, at fuelling station","gasoline, synthetic, vehicle grade",,biofuel production
+"kerosene production, from methanol, market-average hydrogen, CO2 from DAC, economic allocation","kerosene, synthetic",,biofuel production
+"kerosene production, from methanol, market-average hydrogen, CO2 from DAC, energy allocation","kerosene, synthetic",,biofuel production
+"kerosene production, synthetic, Fischer Tropsch process, market-average hydrogen, economic allocation","kerosene, synthetic",,biofuel production
+"kerosene production, synthetic, Fischer Tropsch process, market-average hydrogen, energy allocation","kerosene, synthetic",,biofuel production
+"kerosene production, synthetic, from Fischer Tropsch process, market-average hydrogen, economic allocation, at fuelling station","kerosene, synthetic",,biofuel production
+"kerosene production, synthetic, from Fischer Tropsch process, market-average hydrogen, energy allocation, at fuelling station","kerosene, synthetic",,biofuel production
+"kerosene production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, economic allocation, at fuelling station","kerosene, synthetic, vehicle grade",,biofuel production
+"kerosene production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, energy allocation, at fuelling station","kerosene, synthetic, vehicle grade",,biofuel production
+"liquefied petroleum gas production, from methanol, market-average hydrogen, CO2 from DAC, economic allocation","liquefied petroleum gas, synthetic",,biofuel production
+"liquefied petroleum gas production, from methanol, market-average hydrogen, CO2 from DAC, energy allocation","liquefied petroleum gas, synthetic",,biofuel production
+"liquefied petroleum gas production, synthetic, Fischer Tropsch process, market-average hydrogen, energy allocation","liquefied petroleum gas, synthetic",,biofuel production
+"liquefied petroleum gas production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, economic allocation, at fuelling station","liquefied petroleum gas, synthetic, vehicle grade",,biofuel production
+"liquefied petroleum gas production, synthetic, from methanol, market-average hydrogen, CO2 from DAC, energy allocation, at fuelling station","liquefied petroleum gas, synthetic, vehicle grade",,biofuel production
+"lubricating oil production, synthetic, Fischer Tropsch process, market-average hydrogen, energy allocation","lubricating oil, synthetic",,biofuel production
+"methanol distillation, market-average hydrogen, CO2 from DAC","methanol, purified",,biofuel production
+"methanol synthesis, market-average hydrogen, CO2 from DAC","methanol, unpurified",,biofuel production
+"naphtha production, synthetic, Fischer Tropsch process, market-average hydrogen, economic allocation","naphtha, synthetic",,biofuel production
+"naphtha production, synthetic, Fischer Tropsch process, market-average hydrogen, energy allocation","naphtha, synthetic",,biofuel production
+"syngas, RWGS, Production, for Fischer Tropsch process, market-average hydrogen","syngas, RWGS, Production, for Fischer Tropsch process, market-average hydrogen",,biofuel production
